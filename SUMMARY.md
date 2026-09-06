@@ -257,3 +257,6 @@
   * [Techniques complementaires](path-penetration-tester/windows-privilege-escalation/techniques-complementaires.md)
   * [Environnements restreints et systemes legacy](path-penetration-tester/windows-privilege-escalation/environnements-restreints.md)
   * [Durcissement Windows](path-penetration-tester/windows-privilege-escalation/durcissement.md)
+* [Processus de test d'intrusion](path-penetration-tester/penetration-testing-process/README.md)
+  * [Processus et methodologie](path-penetration-tester/penetration-testing-process/introduction.md)
+  * [Cadre juridique et reglementaire](path-penetration-tester/penetration-testing-process/cadre-juridique.md)
