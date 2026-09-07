@@ -1,13 +1,26 @@
-# 0xH4shDumb — Montée en compétences
+# 0xH4shDumb — Montee en competences
 
-Bienvenue sur mon espace de montée en compétences en cybersécurité offensive.
+Espace de travail personnel en securite offensive, construit au fil du parcours CPTS (Certified Penetration Testing Specialist) de Hack The Box Academy.
 
-Ce site regroupe mes notes de formation, fiches de révision et retours d'expérience sur le parcours **CPTS (Certified Penetration Testing Specialist)** de Hack The Box Academy, ainsi que des ressources complémentaires.
+Chaque page est redigee dans mes propres mots, structuree comme une fiche autonome utilisable en contexte de pentest reel. L'objectif n'est pas de resumer un cours, mais de produire un support de reference personnel, complet et directement exploitable sur le terrain.
 
-Tout le contenu est reformulé dans mes propres mots, structuré comme des fiches autonomes utilisables en contexte de pentest réel.
+## Contenu
 
-## Sections
+Le site couvre l'ensemble de la chaine d'attaque, de la reconnaissance initiale a la cloture d'engagement :
 
-* [PATH Penetration Tester](path-penetration-tester/) — Modules du parcours CPTS
+| Section | Contenu |
+|---|---|
+| **Fondamentaux** | Premiers pas, methodologie, cadre juridique |
+| **Reconnaissance** | Nmap, footprinting, reconnaissance web, evaluation de vulnerabilites |
+| **Outillage** | Transfert de fichiers, shells, proxys web, Metasploit |
+| **Attaques web** | Fuzzing, brute force, SQLi, XSS, LFI, upload, injection de commandes, IDOR, XXE |
+| **Exploitation d'infrastructure** | Services courants (SMB, FTP, RDP...), applications (WordPress, Tomcat, Jenkins...) |
+| **Post-exploitation** | Mots de passe, privesc Linux/Windows, pivoting, Active Directory |
+| **Cloture** | Documentation, reporting, engagement complet de bout en bout |
+| **Ressources** | Cheat sheet transversal avec les commandes essentielles |
+
+## Environnement
+
+L'environnement de reference est [Exegol](https://exegol.readthedocs.io/), une distribution de pentest containerisee. Les IPs et hostnames sont generiques (`<IP_CIBLE>`, `<IP_ATTAQUANT>`), les commandes adaptables a tout contexte.
 
 ***
