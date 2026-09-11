@@ -80,7 +80,7 @@ Le header `X-Powered-By` révèle souvent le langage (PHP, ASP.NET). Les cookies
 
 ### Vérification rapide de la surface d'upload
 
-Depuis un conteneur Exegol, la première étape consiste à identifier les fonctionnalités d'upload et le framework :
+Depuis votre machine d'attaque, la première étape consiste à identifier les fonctionnalités d'upload et le framework :
 
 ```bash
 # - Identifier le langage serveur

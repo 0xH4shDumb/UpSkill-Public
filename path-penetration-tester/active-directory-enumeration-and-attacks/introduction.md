@@ -50,7 +50,7 @@ Sans aucun acces initial, Kerbrute a permis d'enumerer 516 utilisateurs valides 
 | PingCastle | Windows | Audit de securite AD |
 
 {% hint style="info" %}
-Sur Exegol, la majorite de ces outils sont preinstalles. Pour un poste Windows, les outils se trouvent generalement dans `C:\Tools`. L'important est de savoir utiliser les deux plateformes : certaines situations (managed workstation, VDI) imposent de travailler exclusivement depuis Windows.
+Sur la plupart des distributions offensives, la majorite de ces outils sont preinstalles. Pour un poste Windows, les outils se trouvent generalement dans `C:\Tools`. L'important est de savoir utiliser les deux plateformes : certaines situations (managed workstation, VDI) imposent de travailler exclusivement depuis Windows.
 {% endhint %}
 
 ## En pratique

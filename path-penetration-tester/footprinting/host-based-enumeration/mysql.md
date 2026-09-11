@@ -51,7 +51,7 @@ bind-address = 0.0.0.0
 ### Scan du service
 
 ```bash
-# depuis Exegol - détection et scripts NSE MySQL
+# depuis votre machine d'attaque - détection et scripts NSE MySQL
 sudo nmap -sV -sC -p3306 --script mysql* <IP_CIBLE>
 ```
 
@@ -60,7 +60,7 @@ Les scripts NSE détectent la version, testent les mots de passe vides (`mysql-e
 ### Connexion
 
 ```bash
-# depuis Exegol - connexion avec credentials
+# depuis votre machine d'attaque - connexion avec credentials
 mysql -u root -p -h <IP_CIBLE>
 ```
 

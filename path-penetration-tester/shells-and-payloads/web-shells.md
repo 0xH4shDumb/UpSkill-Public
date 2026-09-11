@@ -38,7 +38,7 @@ Les applications web verifient souvent le type MIME et l'extension du fichier up
 
 ### Laudanum (ASPX)
 
-Laudanum est une collection de web shells pretes a l'emploi pour plusieurs langages (PHP, ASPX, JSP). Sur Exegol/Kali, les fichiers sont disponibles dans :
+Laudanum est une collection de web shells pretes a l'emploi pour plusieurs langages (PHP, ASPX, JSP). Sur Kali/Parrot ou toute distribution offensive, les fichiers sont disponibles dans :
 
 ```bash
 /usr/share/laudanum/

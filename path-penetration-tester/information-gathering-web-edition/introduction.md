@@ -50,6 +50,6 @@ En pratique, les deux approches se complètent. On commence généralement par l
 
 ## Ce que couvre ce module
 
-Ce module explore les techniques essentielles de reconnaissance web, en partant des fondamentaux (WHOIS, DNS) pour aller vers des méthodes plus avancées (crawling, fingerprinting, automatisation). Chaque technique est abordée avec son contexte d'utilisation et ses outils pratiques, dans un environnement Exegol.
+Ce module explore les techniques essentielles de reconnaissance web, en partant des fondamentaux (WHOIS, DNS) pour aller vers des méthodes plus avancées (crawling, fingerprinting, automatisation). Chaque technique est abordée avec son contexte d'utilisation et ses outils pratiques, dans votre environnement d'attaque.
 
 ***

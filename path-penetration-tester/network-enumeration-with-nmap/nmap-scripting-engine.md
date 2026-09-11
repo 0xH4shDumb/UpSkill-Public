@@ -36,7 +36,6 @@ Tu peux lister tous les scripts disponibles avec `ls /usr/share/nmap/scripts/` o
 L'option `-sC` active la catégorie `default` — un bon point de départ pour tout scan d'énumération :
 
 ```bash
-# Depuis Exegol
 sudo nmap <IP_CIBLE> -sC
 ```
 
@@ -45,7 +44,6 @@ sudo nmap <IP_CIBLE> -sC
 Pour chercher des vulnérabilités connues sur un service web :
 
 ```bash
-# Depuis Exegol
 sudo nmap <IP_CIBLE> -p 80 -sV --script vuln
 ```
 
@@ -56,7 +54,6 @@ Le script `vulners` va croiser la version détectée avec sa base de CVE et te s
 Tu peux nommer directement les scripts qui t'intéressent, séparés par des virgules :
 
 ```bash
-# Depuis Exegol
 sudo nmap <IP_CIBLE> -p 25 --script banner,smtp-commands
 ```
 
@@ -72,7 +69,6 @@ Cette option regroupe quatre fonctionnalités en une seule commande :
 - Scripts par défaut (`-sC`)
 
 ```bash
-# Depuis Exegol
 sudo nmap <IP_CIBLE> -p 80 -A
 ```
 

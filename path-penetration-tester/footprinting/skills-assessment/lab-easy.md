@@ -22,7 +22,7 @@ Un serveur peut exposer plusieurs instances d'un meme service sur des ports diff
 
 ### Scan initial
 
-Depuis Exegol, on commence par un scan complet pour ne rien rater :
+Depuis votre machine d'attaque, on commence par un scan complet pour ne rien rater :
 
 ```bash
 sudo nmap -sV -sC -p- <IP_CIBLE> -oN footprint_easy_tcp

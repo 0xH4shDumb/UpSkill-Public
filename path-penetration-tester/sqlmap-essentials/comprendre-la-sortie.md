@@ -226,7 +226,7 @@ Chaque requête apparait dans l'onglet HTTP History du proxy. On peut alors les 
 
 ### Scénario type : interpréter un scan complet
 
-Depuis Exegol, on lance un scan basique et on observe la sortie :
+Depuis votre machine d'attaque, on lance un scan basique et on observe la sortie :
 
 ```bash
 sqlmap -u "http://<IP_CIBLE>/page.php?id=1" --batch

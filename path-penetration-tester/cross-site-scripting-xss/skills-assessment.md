@@ -26,7 +26,7 @@ La Blind XSS demande de la patience. On ne reçoit un retour que lorsque la vict
 
 ### Mise en place du listener
 
-On commence par préparer un serveur PHP sur notre machine Exegol pour recevoir les callbacks :
+On commence par préparer un serveur PHP sur notre machine votre machine d'attaque pour recevoir les callbacks :
 
 ```bash
 mkdir /tmp/xss-lab

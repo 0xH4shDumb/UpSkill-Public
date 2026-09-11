@@ -42,7 +42,7 @@ Le credential stuffing exploite la reutilisation de mots de passe entre services
 | `xato-net-10-million-passwords.txt` | Compilation de 10 millions de mots de passe | ~10 millions | Brute force large |
 
 {% hint style="info" %}
-Sur Exegol, les wordlists SecLists sont disponibles dans `/usr/share/seclists/`. Sur Kali, c'est le meme chemin. `rockyou.txt` se trouve dans `/usr/share/wordlists/`.
+Sur la plupart des distributions offensives, les wordlists SecLists sont disponibles dans `/usr/share/seclists/`. Sur Kali, c'est le meme chemin. `rockyou.txt` se trouve dans `/usr/share/wordlists/`.
 {% endhint %}
 
 ### Filtrer une wordlist par politique de mot de passe

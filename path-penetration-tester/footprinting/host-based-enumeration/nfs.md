@@ -56,26 +56,26 @@ La configuration des exports se fait dans `/etc/exports`. Chaque ligne définit 
 ### Scanner le service
 
 ```bash
-# depuis Exegol - détection des services NFS
+# depuis votre machine d'attaque - détection des services NFS
 sudo nmap -p111,2049 -sV -sC <IP_CIBLE>
 ```
 
 ```bash
-# depuis Exegol - scripts NSE spécifiques NFS
+# depuis votre machine d'attaque - scripts NSE spécifiques NFS
 sudo nmap --script nfs* -p111,2049 <IP_CIBLE>
 ```
 
 ### Lister les exports
 
 ```bash
-# depuis Exegol - voir les répertoires exportés
+# depuis votre machine d'attaque - voir les répertoires exportés
 showmount -e <IP_CIBLE>
 ```
 
 ### Monter un partage
 
 ```bash
-# depuis Exegol - monter le partage localement
+# depuis votre machine d'attaque - monter le partage localement
 mkdir target-NFS
 sudo mount -t nfs <IP_CIBLE>:/chemin/export ./target-NFS/ -o nolock
 ```

@@ -121,7 +121,7 @@ Toutes les combinaisons ne fonctionnent pas systématiquement. Il faut tester m�
 
 ### Bypass du Content-Type seul
 
-Depuis Exegol, avec Burp Suite en proxy :
+Depuis votre machine d'attaque, avec Burp Suite en proxy :
 
 ```bash
 # 1 - Créer le web shell

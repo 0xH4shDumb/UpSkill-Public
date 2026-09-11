@@ -12,7 +12,7 @@ Medusa fonctionne sur le meme principe qu'Hydra : il ouvre des connexions parall
 
 ### Installation
 
-Preinstalle sur Kali, Parrot et Exegol. Pour verifier :
+Preinstalle sur Kali, Parrot et votre machine d'attaque. Pour verifier :
 
 ```bash
 medusa -h

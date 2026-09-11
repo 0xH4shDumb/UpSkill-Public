@@ -131,7 +131,7 @@ XXEinjector encode les données en base64, donc le contenu n'apparaît pas direc
 
 ## En pratique
 
-### Exfiltration OOB manuelle depuis Exegol
+### Exfiltration OOB manuelle depuis votre machine d'attaque
 
 ```bash
 # 1 - Créer le DTD malveillant
@@ -195,7 +195,7 @@ sudo tcpdump -i tun0 -n 'udp port 53'
 - **Encodage double** : certains parsers encodent les caractères spéciaux dans l'URL, ce qui corrompt le base64. Le signe `+` est particulièrement problématique (remplacé par un espace)
 {% endtab %}
 {% tab title="XXEinjector" %}
-- **Dépendances Ruby** : l'outil nécessite Ruby et certaines gems. Sur Exegol, vérifier que tout est installé avant de lancer
+- **Dépendances Ruby** : l'outil nécessite Ruby et certaines gems. Sur la plupart des distributions offensives, vérifier que tout est installé avant de lancer
 - **Format de requête** : le fichier de requête doit correspondre exactement au format attendu par l'application (headers, Content-Type). Un header manquant peut faire échouer silencieusement l'attaque
 - **Timeout** : sur des serveurs lents, augmenter le timeout avec `--timeout`
 {% endtab %}

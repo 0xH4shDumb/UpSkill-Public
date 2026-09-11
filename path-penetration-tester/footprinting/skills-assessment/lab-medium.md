@@ -111,7 +111,7 @@ GO
 
 {% tab title="MSSQL via impacket" %}
 ```bash
-# - depuis Exegol, sans RDP
+# - depuis votre machine d'attaque, sans RDP
 impacket-mssqlclient sa:'<MOT_DE_PASSE>'@<IP_CIBLE>
 ```
 

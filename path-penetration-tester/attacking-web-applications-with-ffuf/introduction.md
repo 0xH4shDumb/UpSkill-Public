@@ -44,7 +44,7 @@ Le mot-cle `FUZZ` est le marqueur de position. Il est remplace par chaque ligne 
 | Parametres | `Discovery/Web-Content/burp-parameter-names.txt` |
 
 {% hint style="info" %}
-SecLists est disponible dans `/usr/share/seclists/` sur Exegol et Kali. Certaines wordlists contiennent des lignes de commentaires en debut de fichier. L'option `-ic` permet de les ignorer.
+SecLists est disponible dans `/usr/share/seclists/` sur votre machine d'attaque et Kali. Certaines wordlists contiennent des lignes de commentaires en debut de fichier. L'option `-ic` permet de les ignorer.
 {% endhint %}
 
 ## Pieges et galeres

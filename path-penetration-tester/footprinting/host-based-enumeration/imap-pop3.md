@@ -67,7 +67,7 @@ apt install dovecot-imapd dovecot-pop3d
 ### Scan de ports
 
 ```bash
-# depuis Exegol - detection des services IMAP/POP3
+# depuis votre machine d'attaque - detection des services IMAP/POP3
 sudo nmap -sV -sC -p110,143,993,995 <IP_CIBLE>
 ```
 
@@ -80,7 +80,7 @@ Le certificat SSL d'un serveur IMAP/POP3 est une mine d'informations passives. L
 ### Connexion via curl
 
 ```bash
-# depuis Exegol - lister les dossiers IMAP
+# depuis votre machine d'attaque - lister les dossiers IMAP
 curl -k 'imaps://<IP_CIBLE>' --user user:password
 ```
 
@@ -89,7 +89,7 @@ curl -k 'imaps://<IP_CIBLE>' --user user:password
 {% tabs %}
 {% tab title="IMAP" %}
 ```bash
-# depuis Exegol - session IMAP sur TLS
+# depuis votre machine d'attaque - session IMAP sur TLS
 openssl s_client -connect <IP_CIBLE>:993
 ```
 
@@ -97,7 +97,7 @@ Une fois connecté, utiliser les commandes IMAP (`LOGIN`, `LIST`, `SELECT`, `FET
 {% endtab %}
 {% tab title="POP3" %}
 ```bash
-# depuis Exegol - session POP3 sur TLS
+# depuis votre machine d'attaque - session POP3 sur TLS
 openssl s_client -connect <IP_CIBLE>:995
 ```
 

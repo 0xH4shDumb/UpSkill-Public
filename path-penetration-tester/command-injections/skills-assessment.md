@@ -40,7 +40,7 @@ Si les commandes sont blacklistées, appliquer les techniques d'obfuscation : in
 
 ## Commandes
 
-Depuis un conteneur Exegol, voici la progression type pour exploiter un gestionnaire de fichiers vulnérable :
+Depuis votre machine d'attaque, voici la progression type pour exploiter un gestionnaire de fichiers vulnérable :
 
 ```bash
 # - Étape 1 : intercepter et tester un opérateur non filtré

@@ -168,7 +168,7 @@ Cette technique fonctionne uniquement dans CMD, pas dans PowerShell.
 
 ## En pratique
 
-### Workflow de contournement depuis Exegol
+### Workflow de contournement depuis votre machine d'attaque
 
 ```bash
 # - Étape 1 : vérifier que l'input de base fonctionne

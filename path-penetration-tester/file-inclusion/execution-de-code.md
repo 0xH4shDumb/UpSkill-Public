@@ -296,7 +296,7 @@ http://<IP_CIBLE>:<PORT>/index.php?language=phar://./profile_images/shell.jpg%2F
 
 ### Workflow complet d'exploitation RFI
 
-Depuis un conteneur Exegol :
+Depuis votre machine d'attaque :
 
 ```bash
 # 1 - Vérifier allow_url_include

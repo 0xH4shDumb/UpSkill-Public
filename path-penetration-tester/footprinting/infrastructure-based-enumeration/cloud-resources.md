@@ -15,7 +15,7 @@ Identifier ces ressources pendant la phase de reconnaissance permet de mettre en
 En résolvant les sous-domaines identifiés lors de la collecte de domaine, certaines entrées pointent directement vers des services cloud. Un CNAME vers `s3-website-us-west-2.amazonaws.com` ou un enregistrement A vers une IP Azure trahit immédiatement la présence de stockage cloud.
 
 ```bash
-# depuis Exegol - identifier les sous-domaines liés au cloud
+# depuis votre machine d'attaque - identifier les sous-domaines liés au cloud
 for sub in $(cat subdomains.txt); do
   host "$sub" | grep -E "amazonaws|blob\.core|storage\.googleapis"
 done
@@ -65,7 +65,7 @@ La recherche de ressources cloud s'intègre naturellement dans la collecte passi
 4. **Outils spécialisés** : lancer GrayHatWarfare ou cloud\_enum pour une recherche automatisée
 
 ```bash
-# depuis Exegol - enumération cloud avec cloud_enum
+# depuis votre machine d'attaque - enumération cloud avec cloud_enum
 python3 cloud_enum.py -k "nom-entreprise" -k "nom-domaine"
 ```
 

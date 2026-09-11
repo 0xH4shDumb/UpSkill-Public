@@ -41,7 +41,7 @@ C'est pour ça que les scans UDP sont lents : Nmap doit attendre le timeout sur 
 ### Scanner les ports TCP les plus courants
 
 ```bash
-# Depuis Exegol — scan rapide des 10 ports les plus fréquents
+# Scan rapide des 10 ports les plus fréquents
 sudo nmap <IP_CIBLE> --top-ports=10
 ```
 
@@ -50,7 +50,7 @@ Nmap s'appuie sur sa base interne de fréquence pour choisir les ports les plus 
 ### SYN scan sur un port précis avec trace réseau
 
 ```bash
-# Depuis Exegol — observer les échanges paquet par paquet
+# Observer les échanges paquet par paquet
 sudo nmap <IP_CIBLE> -p 21 --packet-trace -Pn -n --disable-arp-ping
 ```
 
@@ -59,7 +59,7 @@ L'option `--packet-trace` affiche chaque paquet envoyé et reçu. Tu vois exacte
 ### TCP Connect scan avec justification
 
 ```bash
-# Depuis Exegol — scan Connect complet avec raison de l'état
+# Scan Connect complet avec raison de l'état
 sudo nmap <IP_CIBLE> -p 443 -sT --packet-trace -Pn -n --disable-arp-ping --reason
 ```
 
@@ -70,14 +70,14 @@ Le flag `--reason` t'indique explicitement pourquoi Nmap a classé le port dans 
 Un pare-feu peut réagir de deux façons face à un scan :
 
 ```bash
-# Depuis Exegol — port filtré silencieux (drop)
+# Port filtré silencieux (drop)
 sudo nmap <IP_CIBLE> -p 139 --packet-trace -n -Pn --disable-arp-ping
 ```
 
 Aucune réponse ne revient : Nmap retente plusieurs fois avant de conclure `filtered`. C'est lent.
 
 ```bash
-# Depuis Exegol — port filtré avec rejet ICMP explicite
+# Port filtré avec rejet ICMP explicite
 sudo nmap <IP_CIBLE> -p 445 --packet-trace -n -Pn --disable-arp-ping
 ```
 
@@ -86,19 +86,19 @@ Le pare-feu renvoie un message ICMP type 3/code 3 (port unreachable). C'est plus
 ### Scan UDP
 
 ```bash
-# Depuis Exegol — scan UDP rapide (top 100 ports)
+# Scan UDP rapide (top 100 ports)
 sudo nmap <IP_CIBLE> -F -sU
 ```
 
 ```bash
-# Depuis Exegol — scan UDP ciblé avec trace et justification
+# Scan UDP ciblé avec trace et justification
 sudo nmap <IP_CIBLE> -sU -Pn -n --disable-arp-ping --packet-trace -p 137 --reason
 ```
 
 ### Détection de version rapide
 
 ```bash
-# Depuis Exegol — identifier le service derrière un port
+# Identifier le service derrière un port
 sudo nmap <IP_CIBLE> -Pn -n --disable-arp-ping --packet-trace -p 445 --reason -sV
 ```
 

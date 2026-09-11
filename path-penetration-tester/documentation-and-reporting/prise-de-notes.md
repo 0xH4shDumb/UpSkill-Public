@@ -127,7 +127,7 @@ engagement/
 | Inclure la barre d'URL ou le prompt shell | Screenshot sans contexte (quelle machine ?) |
 | Encadrer les elements importants (fleches, cadres) | Screenshot brut sans annotation |
 | Utiliser un fond opaque (pas transparent) | Terminal transparent montrant le bureau |
-| Prompt professionnel (`pentester@exegol`) | Prompt type `hackerman@pwn3d` |
+| Prompt professionnel (`pentester@kali`) | Prompt type `hackerman@pwn3d` |
 | Masquer les donnees sensibles | Credentials en clair dans les captures |
 
 ## Pieges et galeres

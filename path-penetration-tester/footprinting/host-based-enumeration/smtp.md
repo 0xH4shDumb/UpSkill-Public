@@ -79,14 +79,14 @@ smtp_bind_address = 0.0.0.0
 ### Identification du service
 
 ```bash
-# depuis Exegol - scan de version et scripts NSE
+# depuis votre machine d'attaque - scan de version et scripts NSE
 sudo nmap -sC -sV -p25 <IP_CIBLE>
 ```
 
 ### Détection de relai ouvert
 
 ```bash
-# depuis Exegol - test d'open relay
+# depuis votre machine d'attaque - test d'open relay
 sudo nmap -p25 --script smtp-open-relay -v <IP_CIBLE>
 ```
 
@@ -95,7 +95,7 @@ Ce script effectue 16 tests pour déterminer si le serveur accepte l'envoi de ma
 ### Enumération d'utilisateurs
 
 ```bash
-# depuis Exegol - brute-force des comptes via VRFY
+# depuis votre machine d'attaque - brute-force des comptes via VRFY
 smtp-user-enum -M VRFY -U userlist.txt -t <IP_CIBLE> -p 25
 ```
 
@@ -106,7 +106,7 @@ Si `VRFY` est désactivé, les commandes `RCPT TO` et `EXPN` peuvent parfois ser
 ### Interaction manuelle
 
 ```bash
-# depuis Exegol - session telnet pour tester le comportement du serveur
+# depuis votre machine d'attaque - session telnet pour tester le comportement du serveur
 telnet <IP_CIBLE> 25
 ```
 
@@ -126,7 +126,7 @@ L'interaction manuelle permet de tester le comportement du serveur face à des r
 ### Récupération de la bannière
 
 ```bash
-# depuis Exegol - lecture directe de la bannière
+# depuis votre machine d'attaque - lecture directe de la bannière
 nc -nv <IP_CIBLE> 25
 ```
 

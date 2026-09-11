@@ -38,14 +38,14 @@ Beaucoup de pare-feux laissent passer le trafic venant du port 53 (DNS) parce qu
 ### Comparer SYN scan et ACK scan
 
 ```bash
-# Depuis Exegol — SYN scan pour voir l'état des ports
+# SYN scan pour voir l'état des ports
 sudo nmap <IP_CIBLE> -p 21,22,25 -sS -Pn -n --disable-arp-ping --packet-trace
 ```
 
 Résultat typique : le port 22 répond `open`, les ports 21 et 25 apparaissent `filtered`.
 
 ```bash
-# Depuis Exegol — ACK scan pour déduire les règles firewall
+# ACK scan pour déduire les règles firewall
 sudo nmap <IP_CIBLE> -p 21,22,25 -sA -Pn -n --disable-arp-ping --packet-trace
 ```
 
@@ -54,7 +54,7 @@ Résultat : le port 22 passe en `unfiltered` (le firewall le laisse passer), les
 ### Masquer son IP avec des decoys
 
 ```bash
-# Depuis Exegol — scan SYN avec 5 IPs leurres
+# Scan SYN avec 5 IPs leurres
 sudo nmap <IP_CIBLE> -p 80 -sS -Pn -n --disable-arp-ping --packet-trace -D RND:5
 ```
 
@@ -63,14 +63,14 @@ Dans les logs côté cible, 6 adresses différentes apparaissent comme source du
 ### Contourner un filtre via le port source DNS
 
 ```bash
-# Depuis Exegol — scan classique (bloqué)
+# Scan classique (bloqué)
 sudo nmap <IP_CIBLE> -p 50000 -sS -Pn -n --disable-arp-ping --packet-trace
 ```
 
 Le port apparaît `filtered`. Maintenant, même scan mais avec le port source 53 :
 
 ```bash
-# Depuis Exegol — scan en se faisant passer pour du trafic DNS
+# Scan en se faisant passer pour du trafic DNS
 sudo nmap <IP_CIBLE> -p 50000 -sS -Pn -n --disable-arp-ping --packet-trace --source-port 53
 ```
 
@@ -79,7 +79,7 @@ Le port passe en `open`. Le firewall a laissé passer le paquet parce qu'il vena
 ### Confirmer avec Netcat
 
 ```bash
-# Depuis Exegol — connexion directe en forçant le port source
+# Connexion directe en forçant le port source
 ncat -nv --source-port 53 <IP_CIBLE> 50000
 ```
 

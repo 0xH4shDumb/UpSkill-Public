@@ -36,7 +36,7 @@ En version gratuite, Burp Intruder est limite a 1 requete par seconde. Pour du f
 
 ### Installation
 
-Les deux outils sont pre-installes sur Exegol et Kali. Sinon, les installer depuis leurs sites respectifs. Les deux necessitent un JRE (Java Runtime Environment), inclus dans les installeurs.
+Les deux outils sont pre-installes sur votre machine d'attaque et Kali. Sinon, les installer depuis leurs sites respectifs. Les deux necessitent un JRE (Java Runtime Environment), inclus dans les installeurs.
 
 ```bash
 # Lancement Burp Suite

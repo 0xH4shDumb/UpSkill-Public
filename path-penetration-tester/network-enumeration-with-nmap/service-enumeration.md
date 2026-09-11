@@ -26,19 +26,19 @@ Certains services annoncent spontanément leur identité dès la connexion : c'e
 ### Scan de version complet
 
 ```bash
-# Depuis Exegol — scan de tous les ports avec détection de version
+# Scan de tous les ports avec détection de version
 sudo nmap -p- -sV <IP_CIBLE>
 ```
 
 L'option `-p-` scanne l'intégralité des 65535 ports. Sur un réseau lent, ça peut prendre un moment. Deux options pour suivre la progression :
 
 ```bash
-# Depuis Exegol — affichage des stats toutes les 5 secondes
+# Affichage des stats toutes les 5 secondes
 sudo nmap -p- -sV --stats-every=5s <IP_CIBLE>
 ```
 
 ```bash
-# Depuis Exegol — mode verbeux, affiche chaque port dès sa découverte
+# Mode verbeux, affiche chaque port dès sa découverte
 sudo nmap -p- -sV -v <IP_CIBLE>
 ```
 
@@ -49,7 +49,7 @@ Tu peux aussi appuyer sur `[Espace]` pendant un scan en cours pour afficher l'é
 Pour voir le détail des échanges réseau et les bannières brutes :
 
 ```bash
-# Depuis Exegol — scan avec trace des paquets
+# Scan avec trace des paquets
 sudo nmap -p- -sV -Pn -n --disable-arp-ping --packet-trace <IP_CIBLE>
 ```
 
@@ -60,12 +60,12 @@ Dans la sortie, cherche les lignes `NSOCK` — elles contiennent les bannières 
 Nmap fait du bon boulot, mais il ne montre pas tout. Pour récupérer la bannière brute telle que le service l'envoie, connecte-toi directement avec `nc` tout en capturant le trafic :
 
 ```bash
-# Depuis Exegol — terminal 1 : capture du trafic
+# Terminal 1 : capture du trafic
 sudo tcpdump -i eth0 host <IP_CIBLE> and port 25
 ```
 
 ```bash
-# Depuis Exegol — terminal 2 : connexion manuelle au service SMTP
+# Terminal 2 : connexion manuelle au service SMTP
 nc -nv <IP_CIBLE> 25
 ```
 

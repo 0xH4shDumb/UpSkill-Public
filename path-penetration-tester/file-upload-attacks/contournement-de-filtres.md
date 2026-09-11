@@ -212,7 +212,7 @@ Le null byte (`%00`) ne fonctionne que sur PHP 5.x et versions antérieures. Sur
 
 ## En pratique
 
-### Workflow de contournement depuis Exegol
+### Workflow de contournement depuis votre machine d'attaque
 
 ```bash
 # 1 - Identifier le framework (tester les extensions courantes)

@@ -44,7 +44,7 @@ WMI donne accès en lecture/écriture à la quasi-totalité des composants syst�
 {% tabs %}
 {% tab title="Scan" %}
 ```bash
-# depuis Exegol - scan et enumeration RDP
+# depuis votre machine d'attaque - scan et enumeration RDP
 sudo nmap -sV -sC -p3389 --script rdp* <IP_CIBLE>
 ```
 
@@ -53,19 +53,19 @@ Les scripts `rdp-enum-encryption` et `rdp-ntlm-info` sont particulièrement util
 
 {% tab title="Audit de sécurité" %}
 ```bash
-# depuis Exegol - vérification des paramètres de sécurité RDP
+# depuis votre machine d'attaque - vérification des paramètres de sécurité RDP
 rdp-sec-check.pl <IP_CIBLE>
 ```
 {% endtab %}
 
 {% tab title="Connexion" %}
 ```bash
-# depuis Exegol - connexion RDP depuis Linux
+# depuis votre machine d'attaque - connexion RDP depuis Linux
 xfreerdp /u:user /p:password /v:<IP_CIBLE>
 ```
 
 ```bash
-# depuis Exegol - avec partage de dossier local
+# depuis votre machine d'attaque - avec partage de dossier local
 xfreerdp /u:user /p:password /v:<IP_CIBLE> /drive:share,/tmp/loot
 ```
 {% endtab %}
@@ -74,12 +74,12 @@ xfreerdp /u:user /p:password /v:<IP_CIBLE> /drive:share,/tmp/loot
 ### WinRM
 
 ```bash
-# depuis Exegol - scan des ports WinRM
+# depuis votre machine d'attaque - scan des ports WinRM
 sudo nmap -sV -sC -p5985,5986 <IP_CIBLE>
 ```
 
 ```bash
-# depuis Exegol - connexion via Evil-WinRM
+# depuis votre machine d'attaque - connexion via Evil-WinRM
 evil-winrm -i <IP_CIBLE> -u user -p password
 ```
 
@@ -90,12 +90,12 @@ Evil-WinRM est l'outil de référence en pentest pour WinRM. Il fournit un shell
 ### WMI
 
 ```bash
-# depuis Exegol - exécution de commandes via WMI
+# depuis votre machine d'attaque - exécution de commandes via WMI
 wmiexec.py user:password@<IP_CIBLE> "whoami"
 ```
 
 ```bash
-# depuis Exegol - shell interactif WMI
+# depuis votre machine d'attaque - shell interactif WMI
 wmiexec.py user:password@<IP_CIBLE>
 ```
 

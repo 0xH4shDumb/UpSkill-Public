@@ -12,7 +12,7 @@ Hydra ouvre plusieurs connexions simultanees vers le service cible et teste les 
 
 ### Installation
 
-Hydra est preinstalle sur la plupart des distributions de pentest (Kali, Parrot, Exegol). Pour verifier :
+Hydra est preinstalle sur la plupart des distributions de pentest (Kali, Parrot, votre machine d'attaque). Pour verifier :
 
 ```bash
 hydra -h

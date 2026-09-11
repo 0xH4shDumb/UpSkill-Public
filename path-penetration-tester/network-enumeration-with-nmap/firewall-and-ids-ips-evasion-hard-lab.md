@@ -19,7 +19,6 @@ La démarche se décompose en trois temps :
 ### Étape 1 — Scan complet avec détection de version
 
 ```bash
-# Depuis Exegol
 sudo nmap <IP_CIBLE> -p- -sS -sV -Pn -n --disable-arp-ping --source-port 53
 ```
 
@@ -30,7 +29,7 @@ Tu devrais obtenir une liste de ports avec la plupart identifiés (SSH, HTTP…)
 Le port source 53 est la clé. On l'utilise directement avec `ncat` pour récupérer la bannière :
 
 ```bash
-# Depuis Exegol — banner grabbing via port source DNS
+# Banner grabbing via port source DNS
 ncat -nv --source-port 53 <IP_CIBLE> 50000
 ```
 

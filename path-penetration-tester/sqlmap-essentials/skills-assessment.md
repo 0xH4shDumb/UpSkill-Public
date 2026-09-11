@@ -46,7 +46,7 @@ L'avantage de travailler avec un fichier de requête plutôt qu'une URL reconstr
 On lance SQLMap avec le fichier de requête pour confirmer l'injection et identifier le contexte de la base de données. Le tamper script `between` est nécessaire pour contourner les filtres en place.
 
 ```bash
-# - Depuis Exegol, on pointe SQLMap sur la requête sauvegardee
+# - Depuis votre machine d'attaque, on pointe SQLMap sur la requête sauvegardee
 sqlmap -r req.txt --batch --tamper=between --current-user --current-db
 ```
 

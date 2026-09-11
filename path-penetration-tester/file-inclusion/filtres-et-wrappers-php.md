@@ -176,7 +176,7 @@ La présence de `extension=expect` dans la configuration ne garantit pas que l'e
 
 ## Retour terrain
 
-En pentest, la première chose à faire après avoir confirmé une LFI est de lire les sources avec `php://filter`. Cela permet de comprendre la logique de l'application, d'identifier d'autres paramètres vulnérables et de trouver des identifiants en dur. Depuis Exegol, cURL est souvent plus pratique que le navigateur pour manipuler les chaînes base64 longues.
+En pentest, la première chose à faire après avoir confirmé une LFI est de lire les sources avec `php://filter`. Cela permet de comprendre la logique de l'application, d'identifier d'autres paramètres vulnérables et de trouver des identifiants en dur. Depuis votre machine d'attaque, cURL est souvent plus pratique que le navigateur pour manipuler les chaînes base64 longues.
 
 Pour l'exécution de commandes, `data://` est le wrapper le plus fiable des trois car il fonctionne en GET pur, sans dépendance à une extension externe. Le workflow classique est : vérifier `allow_url_include` via la LFI, puis encoder un shell en base64, et passer les commandes via `&cmd=`.
 

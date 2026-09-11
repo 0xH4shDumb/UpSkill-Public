@@ -70,7 +70,7 @@ Le TTL est décrémenté de 1 à chaque routeur traversé. Un TTL de 62 reçu su
 ### Scanner un sous-réseau complet
 
 ```bash
-# Depuis Exegol - ping sweep sur un /24
+# Depuis votre machine d'attaque - ping sweep sur un /24
 sudo nmap 10.10.10.0/24 -sn -oA discovery
 ```
 
@@ -88,7 +88,7 @@ grep "for" discovery.nmap | cut -d" " -f5
 Quand on dispose déjà d'une liste de cibles (export DHCP, extraction Active Directory, résultat d'un scan précédent) :
 
 ```bash
-# Depuis Exegol - scan depuis un fichier de cibles
+# Depuis votre machine d'attaque - scan depuis un fichier de cibles
 sudo nmap -sn -oA targeted -iL targets.txt
 ```
 
@@ -99,12 +99,12 @@ Le fichier `targets.txt` contient une adresse par ligne. Ça permet de limiter l
 Pour un nombre limité de cibles, pas besoin de créer un fichier. Nmap accepte les adresses en ligne ou la syntaxe de plage :
 
 ```bash
-# Depuis Exegol - liste explicite
+# Depuis votre machine d'attaque - liste explicite
 sudo nmap -sn -oA multi 10.10.10.5 10.10.10.12 10.10.10.30
 ```
 
 ```bash
-# Depuis Exegol - syntaxe de plage (adresses .18 à .25)
+# Depuis votre machine d'attaque - syntaxe de plage (adresses .18 à .25)
 sudo nmap -sn -oA range 10.10.10.18-25
 ```
 
@@ -115,7 +115,7 @@ La syntaxe de plage fonctionne sur n'importe quel octet et évite de lister chaq
 Avant de lancer un scan de ports complet, vérifier que la cible est en ligne évite des attentes inutiles :
 
 ```bash
-# Depuis Exegol - vérification rapide
+# Depuis votre machine d'attaque - vérification rapide
 sudo nmap <IP_CIBLE> -sn -oA host_check
 ```
 
@@ -124,7 +124,7 @@ sudo nmap <IP_CIBLE> -sn -oA host_check
 Sur un réseau local, Nmap privilégie l'ARP par défaut. Pour forcer l'ICMP (utile pour tester si les paquets ICMP traversent les filtres) :
 
 ```bash
-# Depuis Exegol - ICMP forcé, ARP désactivé
+# Depuis votre machine d'attaque - ICMP forcé, ARP désactivé
 sudo nmap <IP_CIBLE> -sn -PE --disable-arp-ping --packet-trace
 ```
 
@@ -133,7 +133,7 @@ L'option `--packet-trace` affiche chaque paquet envoyé et reçu. C'est indispen
 ### Analyser la raison de détection
 
 ```bash
-# Depuis Exegol - afficher le mécanisme de détection utilisé
+# Depuis votre machine d'attaque - afficher le mécanisme de détection utilisé
 sudo nmap <IP_CIBLE> -sn -PE --reason --disable-arp-ping
 ```
 
@@ -144,7 +144,7 @@ Le flag `--reason` montre sur quel mécanisme Nmap s'est appuyé pour conclure (
 Dans certains contextes (scan à travers un tunnel, test de contournement de pare-feu), on veut s'assurer que seuls les mécanismes qui traversent les routeurs sont utilisés :
 
 ```bash
-# Depuis Exegol - ICMP uniquement, trace complète
+# Depuis votre machine d'attaque - ICMP uniquement, trace complète
 sudo nmap <IP_CIBLE> -sn -PE --packet-trace --disable-arp-ping
 ```
 
