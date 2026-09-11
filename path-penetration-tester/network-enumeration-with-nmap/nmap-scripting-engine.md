@@ -2,7 +2,7 @@
 
 ## Pourquoi
 
-Un scan de ports, c'est bien. Savoir que le port 80 est ouvert, c'est un début. Mais ce qui t'intéresse vraiment, c'est ce qui tourne derrière : quelle version, quelles failles, quelles infos le service laisse fuiter. Le Nmap Scripting Engine transforme Nmap d'un simple scanner en véritable couteau suisse — capable d'énumérer, de détecter des vulnérabilités, voire d'exploiter certaines failles, le tout en une seule passe.
+Un scan de ports, c'est bien. Savoir que le port 80 est ouvert, c'est un début. Mais ce qui t'intéresse vraiment, c'est ce qui tourne derrière : quelle version, quelles failles, quelles infos le service laisse fuiter. Le Nmap Scripting Engine transforme Nmap d'un simple scanner en véritable couteau suisse - capable d'énumérer, de détecter des vulnérabilités, voire d'exploiter certaines failles, le tout en une seule passe.
 
 Pense au NSE comme une boîte à plugins : chaque script est un module spécialisé que tu branches sur ton scan pour aller chercher une info précise.
 
@@ -17,7 +17,7 @@ Le NSE repose sur des scripts écrits en **Lua**, un langage léger et rapide. C
 | `brute`     | Lance des attaques par force brute contre les services détectés |
 | `default`   | Scripts lancés automatiquement avec l'option `-sC` |
 | `discovery` | Récupère des informations complémentaires sur les services |
-| `dos`       | Teste la résistance aux dénis de service — à manier avec précaution |
+| `dos`       | Teste la résistance aux dénis de service - à manier avec précaution |
 | `exploit`   | Tente d'exploiter des vulnérabilités connues |
 | `external`  | Fait appel à des services tiers pour enrichir les résultats |
 | `fuzzer`    | Envoie des données aléatoires pour tester la robustesse |
@@ -33,7 +33,7 @@ Tu peux lister tous les scripts disponibles avec `ls /usr/share/nmap/scripts/` o
 
 ### Lancer les scripts par défaut
 
-L'option `-sC` active la catégorie `default` — un bon point de départ pour tout scan d'énumération :
+L'option `-sC` active la catégorie `default` - un bon point de départ pour tout scan d'énumération :
 
 ```bash
 sudo nmap <IP_CIBLE> -sC
@@ -57,7 +57,7 @@ Tu peux nommer directement les scripts qui t'intéressent, séparés par des vir
 sudo nmap <IP_CIBLE> -p 25 --script banner,smtp-commands
 ```
 
-Le script `banner` récupère la bannière brute du service (souvent plus bavarde que ce qu'affiche `-sV`). Le script `smtp-commands` liste les commandes SMTP acceptées — utile pour savoir si `VRFY` est activé et permet l'énumération d'utilisateurs.
+Le script `banner` récupère la bannière brute du service (souvent plus bavarde que ce qu'affiche `-sV`). Le script `smtp-commands` liste les commandes SMTP acceptées - utile pour savoir si `VRFY` est activé et permet l'énumération d'utilisateurs.
 
 ### Le mode agressif `-A`
 
@@ -72,7 +72,7 @@ Cette option regroupe quatre fonctionnalités en une seule commande :
 sudo nmap <IP_CIBLE> -p 80 -A
 ```
 
-C'est pratique pour un premier survol, mais c'est bruyant — à éviter quand la discrétion compte.
+C'est pratique pour un premier survol, mais c'est bruyant - à éviter quand la discrétion compte.
 
 ## Pièges & galères
 
@@ -83,11 +83,11 @@ C'est pratique pour un premier survol, mais c'est bruyant — à éviter quand l
 
 ## Retour terrain
 
-En pratique, le combo le plus rentable pour un premier contact, c'est `-sV --script=default,vuln` sur les ports ouverts déjà identifiés. Tu obtiens les versions ET les CVE en une passe. Pour le web, ajoute `http-enum` et `http-title` — ça t'évite de curl chaque service à la main.
+En pratique, le combo le plus rentable pour un premier contact, c'est `-sV --script=default,vuln` sur les ports ouverts déjà identifiés. Tu obtiens les versions ET les CVE en une passe. Pour le web, ajoute `http-enum` et `http-title` - ça t'évite de curl chaque service à la main.
 
 Le banner grabbing via NSE (`--script banner`) est souvent plus fiable que `-sV` seul. Certains services renvoient leur bannière complète au script alors qu'ils restent muets face aux sondes de version standard.
 
-Si tu tombes sur un service exotique, consulte la doc du script avec `nmap --script-help <nom>` avant de le lancer à l'aveugle — certains scripts envoient des payloads qui peuvent déclencher des alertes.
+Si tu tombes sur un service exotique, consulte la doc du script avec `nmap --script-help <nom>` avant de le lancer à l'aveugle - certains scripts envoient des payloads qui peuvent déclencher des alertes.
 
 ## Mémo express
 

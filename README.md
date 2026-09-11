@@ -1,4 +1,4 @@
-# 0xH4shDumb — Montee en competences
+# 0xH4shDumb - Montee en competences
 
 Espace de travail personnel en securite offensive, construit au fil du parcours CPTS (Certified Penetration Testing Specialist) de Hack The Box Academy.
 

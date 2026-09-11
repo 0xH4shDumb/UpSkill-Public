@@ -2,14 +2,14 @@
 
 ## Pourquoi
 
-Un scan sans trace écrite, c'est du travail perdu. En pentest, tu enchaînes les phases — reconnaissance, énumération, exploitation — et tu as besoin de revenir sur tes résultats à chaque étape. Sauvegarder systématiquement tes scans te permet de :
+Un scan sans trace écrite, c'est du travail perdu. En pentest, tu enchaînes les phases - reconnaissance, énumération, exploitation - et tu as besoin de revenir sur tes résultats à chaque étape. Sauvegarder systématiquement tes scans te permet de :
 
 - **Comparer** les résultats entre plusieurs passes (avant/après modification de paramètres)
 - **Documenter** proprement tes découvertes pour le rapport final
 - **Reprendre** là où tu t'es arrêté sans tout rescanner
 - **Partager** tes résultats avec un coéquipier ou un client dans un format lisible
 
-Sans fichier de sortie, tu te retrouves à rescanner des cibles déjà traitées, et ça fait perdre un temps précieux — surtout sur des plages réseau larges.
+Sans fichier de sortie, tu te retrouves à rescanner des cibles déjà traitées, et ça fait perdre un temps précieux - surtout sur des plages réseau larges.
 
 ## Comment ça marche
 
@@ -18,7 +18,7 @@ Nmap propose trois formats de sortie, chacun adapté à un usage différent :
 | Format | Option | Extension | Usage principal |
 |--------|--------|-----------|-----------------|
 | Normal | `-oN` | `.nmap` | Lecture humaine, copier-coller rapide |
-| Grepable | `-oG` | `.gnmap` | Filtrage avec `grep`, `awk`, `cut` — idéal pour le scripting |
+| Grepable | `-oG` | `.gnmap` | Filtrage avec `grep`, `awk`, `cut` - idéal pour le scripting |
 | XML | `-oX` | `.xml` | Parsing automatisé, génération de rapports HTML, import dans d'autres outils |
 
 L'option `-oA` combine les trois d'un coup : tu donnes un préfixe, et Nmap génère les trois fichiers correspondants. C'est le réflexe à adopter par défaut.
@@ -61,7 +61,7 @@ PORT   STATE SERVICE
 
 ### Format grepable (`.gnmap`)
 
-Tout tient sur une ligne par hôte — parfait pour extraire les ports ouverts avec un one-liner :
+Tout tient sur une ligne par hôte - parfait pour extraire les ports ouverts avec un one-liner :
 
 ```bash
 cat scan-initial.gnmap
@@ -114,7 +114,7 @@ L'outil `xsltproc` applique la feuille de style XSL intégrée à Nmap pour prod
 xsltproc scan-initial.xml -o scan-initial.html
 ```
 
-Le fichier HTML obtenu est lisible dans n'importe quel navigateur — propre à envoyer à un client ou à intégrer dans un rapport.
+Le fichier HTML obtenu est lisible dans n'importe quel navigateur - propre à envoyer à un client ou à intégrer dans un rapport.
 
 ## Pièges & galères
 

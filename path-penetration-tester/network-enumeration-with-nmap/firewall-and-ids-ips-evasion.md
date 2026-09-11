@@ -10,7 +10,7 @@ Trois acteurs entrent en jeu côté défense, et il faut bien les distinguer :
 
 | Composant | Rôle |
 |---|---|
-| **Firewall** | Filtre le trafic réseau selon des règles prédéfinies — il laisse passer ou bloque, point. |
+| **Firewall** | Filtre le trafic réseau selon des règles prédéfinies - il laisse passer ou bloque, point. |
 | **IDS** (Intrusion Detection System) | Observe le trafic de manière passive et lève une alerte si quelque chose sent mauvais. Il ne bloque rien. |
 | **IPS** (Intrusion Prevention System) | Même principe que l'IDS, mais en mode actif : il coupe la connexion suspecte directement. |
 
@@ -27,7 +27,7 @@ En croisant les résultats SYN et ACK, tu déduis les règles du pare-feu.
 
 ### Les decoys pour noyer ton IP
 
-Avec `-D RND:5`, Nmap génère 5 adresses IP aléatoires et envoie les mêmes paquets depuis chacune d'elles en plus de la tienne. Côté logs du défenseur, ton IP réelle se retrouve noyée dans un tas d'adresses — beaucoup plus dur à identifier.
+Avec `-D RND:5`, Nmap génère 5 adresses IP aléatoires et envoie les mêmes paquets depuis chacune d'elles en plus de la tienne. Côté logs du défenseur, ton IP réelle se retrouve noyée dans un tas d'adresses - beaucoup plus dur à identifier.
 
 ### Le port source DNS pour passer les filtres
 
@@ -89,12 +89,12 @@ Si la connexion s'établit et qu'une bannière s'affiche, c'est confirmé : le f
 
 - **Les decoys ne marchent que si les IPs générées sont plausibles.** Si elles tombent dans des plages non routables ou visiblement fausses, un analyste les repère immédiatement.
 - **Le port source 53 ne fonctionne pas partout.** Les pare-feux modernes inspectent le contenu des paquets (DPI) et vérifient que ce qui vient du port 53 ressemble vraiment à du DNS.
-- **Le scan ACK ne te dit pas si un port est ouvert** — seulement s'il est filtré ou non. Ne confonds pas `unfiltered` et `open`.
-- **Attention au bruit généré.** Un scan avec decoys multiplie le nombre de paquets envoyés — un IDS basé sur le volume de trafic va quand même réagir.
+- **Le scan ACK ne te dit pas si un port est ouvert** - seulement s'il est filtré ou non. Ne confonds pas `unfiltered` et `open`.
+- **Attention au bruit généré.** Un scan avec decoys multiplie le nombre de paquets envoyés - un IDS basé sur le volume de trafic va quand même réagir.
 
 ## Retour terrain
 
-En situation réelle, la technique du port source 53 reste étonnamment efficace sur des réseaux d'entreprise mal segmentés. J'ai souvent vu des pare-feux qui autorisent aveuglément tout ce qui vient du port 53, probablement pour éviter de casser la résolution DNS interne. Le scan ACK est sous-utilisé par beaucoup de pentesters — pourtant, c'est le meilleur moyen de comprendre la logique de filtrage avant de chercher à la contourner. Commence toujours par cartographier avant de foncer.
+En situation réelle, la technique du port source 53 reste étonnamment efficace sur des réseaux d'entreprise mal segmentés. J'ai souvent vu des pare-feux qui autorisent aveuglément tout ce qui vient du port 53, probablement pour éviter de casser la résolution DNS interne. Le scan ACK est sous-utilisé par beaucoup de pentesters - pourtant, c'est le meilleur moyen de comprendre la logique de filtrage avant de chercher à la contourner. Commence toujours par cartographier avant de foncer.
 
 ## Mémo express
 
