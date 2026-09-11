@@ -61,7 +61,7 @@ sqlmap -u "http://<IP_CIBLE>/page.php?id=1" --tor --check-tor
 ```
 
 {% hint style="warning" %}
-L'option `--tor` nécessite que le service Tor soit installé et actif sur la machine. Sous Exegol, vérifier que le service est démarré avant de lancer SQLMap. La latence Tor rallonge considérablement les scans.
+L'option `--tor` nécessite que le service Tor soit installé et actif sur la machine. Sous votre machine d'attaque, vérifier que le service est démarré avant de lancer SQLMap. La latence Tor rallonge considérablement les scans.
 {% endhint %}
 
 ### Contournement du User-Agent

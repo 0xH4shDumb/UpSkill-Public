@@ -17,7 +17,7 @@ Le raisonnement est le suivant :
 
 ## Commandes
 
-Depuis Exegol, commence par vérifier que le port TCP 53 est bien filtré :
+Depuis votre machine d'attaque, commence par vérifier que le port TCP 53 est bien filtré :
 
 ```bash
 sudo nmap <IP_CIBLE> -p 53 -sS -Pn -n --disable-arp-ping

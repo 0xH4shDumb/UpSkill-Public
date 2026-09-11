@@ -52,7 +52,7 @@ Les R-Services sont rares sur les systèmes modernes, mais on les trouve encore 
 {% tabs %}
 {% tab title="Audit" %}
 ```bash
-# depuis Exegol - audit des algorithmes et de la configuration SSH
+# depuis votre machine d'attaque - audit des algorithmes et de la configuration SSH
 ssh-audit <IP_CIBLE>
 ```
 
@@ -61,17 +61,17 @@ ssh-audit identifie les algorithmes de chiffrement faibles, les versions obsolè
 
 {% tab title="Scan Nmap" %}
 ```bash
-# depuis Exegol - détection et scripts NSE
+# depuis votre machine d'attaque - détection et scripts NSE
 sudo nmap -sV -sC -p22 <IP_CIBLE>
 ```
 {% endtab %}
 
 {% tab title="Connexion" %}
 ```bash
-# depuis Exegol - connexion par mot de passe
+# depuis votre machine d'attaque - connexion par mot de passe
 ssh user@<IP_CIBLE>
 
-# depuis Exegol - connexion par clé privée
+# depuis votre machine d'attaque - connexion par clé privée
 ssh -i id_rsa user@<IP_CIBLE>
 ```
 {% endtab %}
@@ -80,17 +80,17 @@ ssh -i id_rsa user@<IP_CIBLE>
 ### Rsync
 
 ```bash
-# depuis Exegol - scan du service
+# depuis votre machine d'attaque - scan du service
 sudo nmap -sV -p873 <IP_CIBLE>
 ```
 
 ```bash
-# depuis Exegol - lister les modules disponibles
+# depuis votre machine d'attaque - lister les modules disponibles
 rsync -av --list-only rsync://<IP_CIBLE>/
 ```
 
 ```bash
-# depuis Exegol - synchroniser un module accessible
+# depuis votre machine d'attaque - synchroniser un module accessible
 rsync -av rsync://<IP_CIBLE>/module ./rsync-loot/
 ```
 
@@ -101,12 +101,12 @@ Les modules Rsync exposés sans authentification contiennent parfois des répert
 ### R-Services
 
 ```bash
-# depuis Exegol - scan des ports R-Services
+# depuis votre machine d'attaque - scan des ports R-Services
 sudo nmap -sV -p512,513,514 <IP_CIBLE>
 ```
 
 ```bash
-# depuis Exegol - connexion via rlogin
+# depuis votre machine d'attaque - connexion via rlogin
 rlogin <IP_CIBLE> -l root
 ```
 

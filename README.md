@@ -21,6 +21,6 @@ Le site couvre l'ensemble de la chaine d'attaque, de la reconnaissance initiale 
 
 ## Environnement
 
-L'environnement de reference est [Exegol](https://exegol.readthedocs.io/), une distribution de pentest containerisee. Les IPs et hostnames sont generiques (`<IP_CIBLE>`, `<IP_ATTAQUANT>`), les commandes adaptables a tout contexte.
+Les notes sont independantes de l'environnement d'attaque. Les outils utilises sont disponibles sur toute distribution offensive (Kali, Parrot, etc.) ou installables individuellement. Les IPs et hostnames sont generiques (`<IP_CIBLE>`, `<IP_ATTAQUANT>`), les commandes sont adaptables a tout contexte.
 
 ***

@@ -109,7 +109,7 @@ La plupart de ces outils sont basés sur Python 2 et ne sont plus activement mai
 
 ### Workflow complet de reconnaissance LFI
 
-Depuis un conteneur Exegol :
+Depuis votre machine d'attaque :
 
 ```bash
 # - Étape 1 : découvrir les paramètres cachés

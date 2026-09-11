@@ -63,7 +63,7 @@ Cette seconde catégorie est nettement plus fréquente en conditions réelles. U
 
 ## En pratique
 
-Les deux scénarios suivants reproduisent une application "File Manager" volontairement vulnérable, exécutée depuis un environnement Exegol. Elle permet de créer des fichiers par leur nom et propose un bouton de réinitialisation protégé par une authentification HTTP Basic.
+Les deux scénarios suivants reproduisent une application "File Manager" volontairement vulnérable, exécutée depuis un environnement votre machine d'attaque. Elle permet de créer des fichiers par leur nom et propose un bouton de réinitialisation protégé par une authentification HTTP Basic.
 
 ### Contourner une authentification HTTP Basic
 

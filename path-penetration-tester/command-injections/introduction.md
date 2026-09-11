@@ -118,7 +118,7 @@ Chaque famille de vulnérabilité par injection utilise ses propres opérateurs 
 
 ### Détecter une injection de commandes
 
-Depuis un conteneur Exegol, la démarche de détection est méthodique :
+Depuis votre machine d'attaque, la démarche de détection est méthodique :
 
 ```bash
 # - Étape 1 : identifier un paramètre qui pourrait interagir avec le système

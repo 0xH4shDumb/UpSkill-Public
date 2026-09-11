@@ -37,7 +37,7 @@ Ce module couvre les principales methodes de transfert, organisees par contexte 
 - **Living off the Land** : utilisation de binaires natifs (LOLBAS, GTFOBins) pour eviter de deposer de nouveaux fichiers
 - **Detection et evasion** : comprendre comment les transferts sont detectes et comment adapter ses techniques
 
-Chaque section fournit des commandes pretes a l'emploi, utilisables depuis un environnement Exegol ou equivalent.
+Chaque section fournit des commandes pretes a l'emploi, utilisables depuis un environnement votre machine d'attaque ou equivalent.
 
 ## Retour terrain
 

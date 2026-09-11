@@ -199,7 +199,7 @@ En pentest, la première chose à faire quand on suspecte une LFI est de tester 
 
 Les attaques de second ordre sont souvent négligées lors des audits automatisés. Si une application permet de stocker du texte libre (nom d'utilisateur, commentaire, préférence) et qu'une autre fonctionnalité utilise cette valeur pour charger un fichier, il y a un vecteur potentiel. Pensez à tester les champs d'inscription et de profil.
 
-Sur Exegol, les wordlists LFI de SecLists sont disponibles directement. Un fuzzing rapide avec `ffuf` permet de confirmer la vulnérabilité et d'identifier le bon payload :
+Sur la plupart des distributions offensives, les wordlists LFI de SecLists sont disponibles directement. Un fuzzing rapide avec `ffuf` permet de confirmer la vulnérabilité et d'identifier le bon payload :
 
 ```bash
 ffuf -w /opt/seclists/Fuzzing/LFI/LFI-Jhaddix.txt:FUZZ \

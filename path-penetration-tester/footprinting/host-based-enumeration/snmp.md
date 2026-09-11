@@ -67,7 +67,7 @@ En SNMPv1 et v2c, ces chaines transitent en clair sur le reseau. Un attaquant po
 `snmpwalk` est l'outil de reference pour interroger un agent SNMP et parcourir l'ensemble de son arborescence MIB.
 
 ```bash
-# Depuis Exegol - enumeration complete de l'arbre MIB
+# Depuis votre machine d'attaque - enumeration complete de l'arbre MIB
 snmpwalk -v2c -c public <IP_CIBLE>
 ```
 
@@ -87,7 +87,7 @@ Ces informations revelent le systeme d'exploitation, le contact administrateur, 
 Quand la community string n'est pas `public`, on peut tenter un brute-force avec une wordlist dediee :
 
 ```bash
-# Depuis Exegol - brute-force des community strings
+# Depuis votre machine d'attaque - brute-force des community strings
 onesixtyone -c /usr/share/seclists/Discovery/SNMP/snmp.txt <IP_CIBLE>
 ```
 
@@ -98,7 +98,7 @@ L'outil envoie des requetes SNMP avec chaque community string de la liste et aff
 `braa` permet d'interroger des OID specifiques en masse, ce qui est plus rapide que `snmpwalk` quand on sait deja ce qu'on cherche :
 
 ```bash
-# Depuis Exegol - interrogation d'une branche OID specifique
+# Depuis votre machine d'attaque - interrogation d'une branche OID specifique
 braa public@<IP_CIBLE>:.1.3.6.*
 ```
 

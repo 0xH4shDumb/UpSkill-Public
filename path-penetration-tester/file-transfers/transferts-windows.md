@@ -10,7 +10,7 @@ Windows reste le systeme d'exploitation le plus present dans les environnements 
 
 Quand aucun canal reseau direct n'est disponible (ou que le transfert doit etre discret), l'encodage base64 permet de convertir un fichier en chaine de caracteres, de la copier via le presse-papier ou un autre canal, puis de la decoder sur la cible.
 
-**Cote attaquant (Exegol/Linux) :**
+**Cote attaquant (votre machine d'attaque/Linux) :**
 
 ```bash
 md5sum id_rsa
@@ -78,7 +78,7 @@ Si Internet Explorer n'a jamais ete lance sur la machine, `Invoke-WebRequest` pe
 
 Le protocole SMB (port 445) est natif sur Windows et souvent autorise en reseau interne. Impacket permet de monter un serveur SMB en quelques secondes.
 
-**Demarrer un serveur SMB (Exegol) :**
+**Demarrer un serveur SMB (votre machine d'attaque) :**
 
 ```bash
 impacket-smbserver partage -smb2support /tmp/partage

@@ -61,7 +61,7 @@ La configuration se fait via `/etc/samba/smb.conf` :
 ### Lister les partages disponibles
 
 ```bash
-# depuis Exegol - listing anonyme des partages
+# depuis votre machine d'attaque - listing anonyme des partages
 smbclient -N -L //<IP_CIBLE>
 ```
 
@@ -70,7 +70,7 @@ L'option `-N` tente une connexion sans mot de passe (session nulle). Si des part
 ### Se connecter à un partage
 
 ```bash
-# depuis Exegol - accès à un partage spécifique
+# depuis votre machine d'attaque - accès à un partage spécifique
 smbclient //<IP_CIBLE>/partage
 ```
 
@@ -87,7 +87,7 @@ smb: \> !cat fichier.txt
 rpcclient permet d'interroger les services MS-RPC et d'extraire des informations sur les utilisateurs, les groupes et les partages.
 
 ```bash
-# depuis Exegol - connexion nulle
+# depuis votre machine d'attaque - connexion nulle
 rpcclient -U "" <IP_CIBLE>
 ```
 
@@ -103,7 +103,7 @@ rpcclient -U "" <IP_CIBLE>
 {% tabs %}
 {% tab title="smbmap" %}
 ```bash
-# depuis Exegol - cartographie des partages et permissions
+# depuis votre machine d'attaque - cartographie des partages et permissions
 smbmap -H <IP_CIBLE>
 ```
 
@@ -112,7 +112,7 @@ SMBMap affiche les partages avec leurs permissions (READ, WRITE) et permet de na
 
 {% tab title="crackmapexec" %}
 ```bash
-# depuis Exegol - enumération rapide des partages
+# depuis votre machine d'attaque - enumération rapide des partages
 crackmapexec smb <IP_CIBLE> --shares -u '' -p ''
 ```
 
@@ -121,7 +121,7 @@ CrackMapExec centralise l'énumération SMB, les tests de credentials et l'exéc
 
 {% tab title="enum4linux-ng" %}
 ```bash
-# depuis Exegol - énumération complète automatisée
+# depuis votre machine d'attaque - énumération complète automatisée
 enum4linux-ng -A <IP_CIBLE>
 ```
 
@@ -130,7 +130,7 @@ enum4linux-ng automatise la collecte d'informations : partages, utilisateurs, gr
 
 {% tab title="nmap" %}
 ```bash
-# depuis Exegol - scripts NSE SMB
+# depuis votre machine d'attaque - scripts NSE SMB
 sudo nmap -sV -sC -p139,445 <IP_CIBLE>
 ```
 

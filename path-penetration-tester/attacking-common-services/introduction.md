@@ -56,7 +56,7 @@ La règle du moindre privilège s'applique à tous les niveaux : comptes utilisa
 
 ## Interagir avec les services
 
-Avant d'attaquer un service, il faut savoir s'y connecter. Voici les outils de base depuis un poste Linux (Exegol) :
+Avant d'attaquer un service, il faut savoir s'y connecter. Voici les outils de base depuis un poste Linux (votre machine d'attaque) :
 
 | Service | Outil(s) | Commande type |
 |---|---|---|
@@ -71,7 +71,7 @@ Avant d'attaquer un service, il faut savoir s'y connecter. Voici les outils de b
 | IMAP | `telnet`, `curl`, `evolution` | `curl imap://<IP_CIBLE> -u user:pass` |
 
 {% hint style="success" %}
-Sur Exegol, la plupart de ces outils sont préinstallés. Pour les bases de données, `dbeaver` offre une interface graphique compatible MySQL, MSSQL, PostgreSQL et Oracle si on préfère explorer visuellement les données.
+Sur la plupart des distributions offensives, la plupart de ces outils sont préinstallés. Pour les bases de données, `dbeaver` offre une interface graphique compatible MySQL, MSSQL, PostgreSQL et Oracle si on préfère explorer visuellement les données.
 {% endhint %}
 
 ## Quoi chercher

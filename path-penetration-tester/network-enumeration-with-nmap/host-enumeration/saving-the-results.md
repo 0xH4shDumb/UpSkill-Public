@@ -28,7 +28,6 @@ L'option `-oA` combine les trois d'un coup : tu donnes un préfixe, et Nmap gén
 ### Sauvegarder dans les trois formats simultanément
 
 ```bash
-# Depuis Exegol
 sudo nmap <IP_CIBLE> -p- -oA scan-initial
 ```
 
@@ -44,7 +43,6 @@ scan-initial.nmap   scan-initial.gnmap   scan-initial.xml
 C'est la sortie telle que tu la verrais dans le terminal, enregistrée dans un fichier texte :
 
 ```bash
-# Depuis Exegol
 cat scan-initial.nmap
 ```
 
@@ -66,7 +64,6 @@ PORT   STATE SERVICE
 Tout tient sur une ligne par hôte — parfait pour extraire les ports ouverts avec un one-liner :
 
 ```bash
-# Depuis Exegol
 cat scan-initial.gnmap
 ```
 
@@ -80,7 +77,7 @@ Host: <IP_CIBLE> ()	Ports: 22/open/tcp//ssh///, 25/open/tcp//smtp///, 80/open/tc
 Tu peux ensuite filtrer rapidement :
 
 ```bash
-# Depuis Exegol — extraire uniquement les ports ouverts
+# Extraire uniquement les ports ouverts
 grep "open" scan-initial.gnmap | cut -d"/" -f1
 ```
 
@@ -89,7 +86,6 @@ grep "open" scan-initial.gnmap | cut -d"/" -f1
 Le XML est verbeux mais structuré. Son intérêt principal : la conversion en rapport HTML.
 
 ```bash
-# Depuis Exegol
 cat scan-initial.xml
 ```
 
@@ -115,7 +111,6 @@ cat scan-initial.xml
 L'outil `xsltproc` applique la feuille de style XSL intégrée à Nmap pour produire un rapport visuel :
 
 ```bash
-# Depuis Exegol
 xsltproc scan-initial.xml -o scan-initial.html
 ```
 
@@ -126,7 +121,7 @@ Le fichier HTML obtenu est lisible dans n'importe quel navigateur — propre à 
 - **Oublier `-oA` et perdre ses résultats** : prends le réflexe de toujours ajouter `-oA` suivi d'un nom explicite. C'est trois lettres qui t'évitent de rescanner pendant 20 minutes.
 - **Noms de fichiers vagues** : `scan1`, `test`, `output`… Au bout de trois cibles, tu ne sais plus quoi est quoi. Adopte une convention : `<cible>-<type>-<date>`, par exemple `webapp-full-20250903`.
 - **Écraser un fichier existant** : Nmap écrase sans prévenir si le préfixe existe déjà. Vérifie avant de lancer, ou utilise un suffixe incrémental.
-- **xsltproc absent** : sur certaines images minimales, `xsltproc` n'est pas installé. Sur Exegol, il est disponible nativement.
+- **xsltproc absent** : sur certaines images minimales, `xsltproc` n'est pas installé. Sur la plupart des distributions offensives, il est disponible nativement.
 
 ## Retour terrain
 

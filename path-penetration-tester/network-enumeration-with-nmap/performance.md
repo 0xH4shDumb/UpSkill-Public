@@ -45,13 +45,13 @@ Nmap embarque 6 profils prédéfinis qui ajustent simultanément le RTT, les ret
 ### Comparer l'impact du RTT
 
 ```bash
-# Depuis Exegol — scan par défaut
+# Scan par défaut
 sudo nmap 10.10.10.0/24 -F
 # Durée : ~40s, 10 hôtes détectés
 ```
 
 ```bash
-# Depuis Exegol — RTT réduit
+# RTT réduit
 sudo nmap 10.10.10.0/24 -F --initial-rtt-timeout 50ms --max-rtt-timeout 100ms
 # Durée : ~12s, 8 hôtes détectés (2 hôtes lents ratés)
 ```
@@ -59,7 +59,7 @@ sudo nmap 10.10.10.0/24 -F --initial-rtt-timeout 50ms --max-rtt-timeout 100ms
 ### Réduire les retries
 
 ```bash
-# Depuis Exegol — sans retry
+# Sans retry
 sudo nmap 10.10.10.0/24 -F --max-retries 0
 # Plus rapide, mais quelques ports silencieux disparaissent du résultat
 ```
@@ -67,7 +67,7 @@ sudo nmap 10.10.10.0/24 -F --max-retries 0
 ### Forcer un débit minimal
 
 ```bash
-# Depuis Exegol — débit plancher à 300 paquets/s
+# Débit plancher à 300 paquets/s
 sudo nmap 10.10.10.0/24 -F --min-rate 300
 # Durée divisée par 3-4, résultats quasi identiques sur un réseau stable
 ```
@@ -75,12 +75,12 @@ sudo nmap 10.10.10.0/24 -F --min-rate 300
 ### Utiliser un timing template agressif
 
 ```bash
-# Depuis Exegol — profil T4 (agressif)
+# Profil T4 (agressif)
 sudo nmap <IP_CIBLE> -p- -T4 -oN scan-rapide.nmap
 ```
 
 ```bash
-# Depuis Exegol — profil T5 (insane) sur réseau local
+# Profil T5 (insane) sur réseau local
 sudo nmap 10.10.10.0/24 -F -T5
 # Très rapide, mais risque de faux négatifs sur les ports lents
 ```

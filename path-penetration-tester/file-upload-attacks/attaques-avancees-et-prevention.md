@@ -192,7 +192,7 @@ Ces vulnérabilités sont régulièrement découvertes. Surveiller les CVE des b
 
 ### Test d'injection dans le nom de fichier
 
-Depuis un conteneur Exegol :
+Depuis votre machine d'attaque :
 
 ```bash
 # - Tester l'injection de commandes via le nom de fichier

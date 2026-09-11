@@ -217,7 +217,7 @@ En audit, la methode la plus fiable reste le combo Burp + fichier de requete. On
 
 Sur des API modernes qui utilisent du JSON, ne pas hesiter a combiner `-r` avec le marqueur `*` pour cibler precisement le champ suspect dans une structure imbriquee.
 
-Depuis un conteneur Exegol, SQLMap est pre-installe et pret a l'emploi. Il suffit de copier le fichier de requete dans le conteneur ou de travailler directement avec les commandes cURL.
+Depuis votre machine d'attaque, SQLMap est pre-installe et pret a l'emploi. Il suffit de copier le fichier de requete dans le conteneur ou de travailler directement avec les commandes cURL.
 
 ## Memo express
 

@@ -29,7 +29,7 @@ Ses capacités couvrent un large spectre :
 
 ### Installation
 
-Sur Exegol (et la plupart des distributions orientées sécurité), SQLMap est déjà installé. Sinon, deux méthodes :
+Sur la plupart des distributions offensives (et la plupart des distributions orientées sécurité), SQLMap est déjà installé. Sinon, deux méthodes :
 
 {% tabs %}
 {% tab title="Via apt" %}

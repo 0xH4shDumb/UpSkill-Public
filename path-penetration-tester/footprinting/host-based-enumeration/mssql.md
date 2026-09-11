@@ -46,7 +46,7 @@ En mode Mixed, le compte `sa` est actif par défaut. Un mot de passe faible sur 
 ### Scan du service
 
 ```bash
-# depuis Exegol - détection et énumération MSSQL
+# depuis votre machine d'attaque - détection et énumération MSSQL
 sudo nmap -p1433 -sV --script ms-sql-info,ms-sql-ntlm-info,ms-sql-empty-password <IP_CIBLE>
 ```
 
@@ -65,12 +65,12 @@ Retourne le nom d'instance, la version, le port et la présence de named pipes.
 ### Connexion avec Impacket
 
 ```bash
-# depuis Exegol - connexion avec authentification Windows
+# depuis votre machine d'attaque - connexion avec authentification Windows
 mssqlclient.py user@<IP_CIBLE> -windows-auth
 ```
 
 ```bash
-# depuis Exegol - connexion avec authentification SQL
+# depuis votre machine d'attaque - connexion avec authentification SQL
 mssqlclient.py sa@<IP_CIBLE>
 ```
 

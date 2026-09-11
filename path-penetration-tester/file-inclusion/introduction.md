@@ -137,7 +137,7 @@ Les fonctions qui exécutent le fichier sont les plus dangereuses : elles permet
 
 ## En pratique
 
-Sur Exegol, on peut tester rapidement une LFI en manipulant le paramètre vulnérable :
+Sur la plupart des distributions offensives, on peut tester rapidement une LFI en manipulant le paramètre vulnérable :
 
 ```bash
 # - Test basique de LFI

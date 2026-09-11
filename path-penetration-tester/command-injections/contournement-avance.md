@@ -293,7 +293,7 @@ typ%TEMP:~-3,-2% %CommonProgramFiles:~17,-11%:\Users\...
 ```
 
 {% hint style="info" %}
-DOSfuscation est aussi utilisable depuis Linux via `pwsh` (PowerShell Core). Il est préinstallé sur Exegol et installable via les [instructions officielles Microsoft](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux).
+DOSfuscation est aussi utilisable depuis Linux via `pwsh` (PowerShell Core). Il est préinstallé sur votre machine d'attaque et installable via les [instructions officielles Microsoft](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-core-on-linux).
 {% endhint %}
 
 {% endtab %}
@@ -303,7 +303,7 @@ DOSfuscation est aussi utilisable depuis Linux via `pwsh` (PowerShell Core). Il 
 
 ### Workflow d'obfuscation manuelle
 
-Depuis un conteneur Exegol :
+Depuis votre machine d'attaque :
 
 ```bash
 # - Étape 1 : identifier les caractères filtrés

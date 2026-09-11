@@ -130,7 +130,7 @@ La revue de code est particulièrement utile pour les applications web populaire
 
 ## En pratique
 
-### Utiliser XSS Strike depuis Exegol
+### Utiliser XSS Strike depuis votre machine d'attaque
 
 Installation et premier scan :
 

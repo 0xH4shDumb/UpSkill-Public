@@ -15,7 +15,7 @@ En pratique, tu combines les deux pour maximiser tes chances : le fingerprint do
 
 ## Commandes
 
-Depuis Exegol, lance un scan combinant détection d'OS et récupération de bannières :
+Depuis votre machine d'attaque, lance un scan combinant détection d'OS et récupération de bannières :
 
 ```bash
 sudo nmap <IP_CIBLE> -sS -Pn -n --disable-arp-ping -O --script=banner

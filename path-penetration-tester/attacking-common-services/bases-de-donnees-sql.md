@@ -277,7 +277,7 @@ mysql -u root -h <IP_CIBLE>
 {% tabs %}
 {% tab title="Connexion" %}
 - **Auth Windows vs SQL** : sur `mssqlclient.py`, oublier `-windows-auth` quand on utilise un compte Windows résulte en un échec silencieux. Toujours préciser le type d'auth
-- **sqsh pas installé** : sur Exegol, `mssqlclient.py` d'impacket est généralement disponible et plus simple à utiliser que sqsh
+- **sqsh pas installé** : sur votre machine d'attaque, `mssqlclient.py` d'impacket est généralement disponible et plus simple à utiliser que sqsh
 - **MySQL refuse la connexion distante** : par défaut, MySQL n'écoute que sur localhost (`bind-address = 127.0.0.1`). Si le port est ouvert mais que la connexion est refusée, le compte peut être restreint à `localhost`
 {% endtab %}
 {% tab title="Exploitation" %}

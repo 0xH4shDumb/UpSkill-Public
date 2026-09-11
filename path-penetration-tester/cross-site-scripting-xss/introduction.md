@@ -103,7 +103,7 @@ Si la balise `<script>` est filtrée (ce qui est courant dans les contextes DOM)
 <script>print()</script>
 ```
 
-Depuis un environnement Exegol, la démarche typique consiste à :
+Depuis votre machine d'attaque, la démarche typique consiste à :
 
 1. Identifier tous les points d'entrée utilisateur (champs de formulaire, paramètres GET/POST, en-têtes HTTP)
 2. Injecter un payload de test dans chaque point d'entrée

@@ -59,7 +59,7 @@ Les enregistrements DNS sont une source d'information souvent sous-exploitée. C
 | SOA | Contact administratif, informations de zone |
 
 ```bash
-# depuis Exegol - récupérer tous les enregistrements publics
+# depuis votre machine d'attaque - récupérer tous les enregistrements publics
 dig any example.com
 ```
 
@@ -78,7 +78,7 @@ La démarche complète pour une reconnaissance de domaine :
 5. **Recoupement** : croiser les résultats pour construire une vue d'ensemble cohérente
 
 ```bash
-# depuis Exegol - workflow condensé
+# depuis votre machine d'attaque - workflow condensé
 curl -s "https://crt.sh/?q=example.com&output=json" | jq -r '.[].name_value' | sort -u > subs.txt
 for sub in $(cat subs.txt); do host "$sub" 2>/dev/null; done | grep "has address" | tee resolved.txt
 dig any example.com

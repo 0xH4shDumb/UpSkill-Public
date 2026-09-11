@@ -17,10 +17,10 @@ Une distribution de pentest est un systeme Linux preconfigure avec les outils ne
 | **Kali Linux** | Debian | La plus repandue, large communaute, mise a jour reguliere des outils |
 | **Parrot Security** | Debian | Plus legere que Kali, interface soignee, outils similaires |
 | **BlackArch** | Arch Linux | Enorme catalogue d'outils, destinee aux utilisateurs avances |
-| **Exegol** | Docker | Conteneurs preconfigures, isolation forte, deploiement rapide |
+| **votre machine d'attaque** | Docker | Conteneurs preconfigures, isolation forte, deploiement rapide |
 
 {% hint style="success" %}
-Exegol est particulierement adapte aux engagements professionnels. Chaque mission demarre dans un conteneur vierge, ce qui elimine le risque de contamination entre les environnements clients. L'installation se fait via `pip install exegol` puis `exegol install`.
+votre machine d'attaque est particulierement adapte aux engagements professionnels. Chaque mission demarre dans un conteneur vierge, ce qui elimine le risque de contamination entre les environnements clients. L'installation se fait via `pip install votre machine d'attaque` puis `votre machine d'attaque install`.
 {% endhint %}
 
 ### Virtualisation
@@ -134,17 +134,17 @@ Ces plateformes permettent de pratiquer dans un environnement controle sans risq
 
 ## En pratique
 
-### Deploiement rapide avec Exegol
+### Deploiement rapide avec votre machine d'attaque
 
 ```bash
-# - Installation d'Exegol
-pip install exegol
+# - Installation d'votre machine d'attaque
+pip install votre machine d'attaque
 
 # - Telechargement de l'image par defaut
-exegol install
+votre machine d'attaque install
 
 # - Lancement d'un conteneur avec connexion VPN
-exegol start mission1 full --vpn client.ovpn
+votre machine d'attaque start mission1 full --vpn client.ovpn
 ```
 
 ### Verification de la connectivite VPN
@@ -166,13 +166,13 @@ ip route
 - **Plusieurs fichiers VPN actifs** : avoir deux connexions VPN simultanees provoque des conflits de routage. Toujours fermer la connexion precedente avant d'en ouvrir une nouvelle
 - **VM trop legere en RAM** : une VM avec moins de 4 Go de RAM aura du mal a faire tourner certains outils (Burp Suite, BloodHound). Prevoir au minimum 4 Go, idealement 8 Go
 - **Notes prises apres coup** : la memoire deforme les etapes. Documenter en temps reel, meme si les notes sont brutes. Il est toujours possible de les restructurer apres
-- **Outils non mis a jour** : les bases de donnees d'exploits evoluent constamment. Mettre a jour les outils et les wordlists avant chaque engagement (`sudo apt update && sudo apt upgrade` ou `exegol update`)
+- **Outils non mis a jour** : les bases de donnees d'exploits evoluent constamment. Mettre a jour les outils et les wordlists avant chaque engagement (`sudo apt update && sudo apt upgrade` ou `votre machine d'attaque update`)
 
 ## Memo express
 
 | Element | Detail |
 |---|---|
-| **Distribution recommandee** | Exegol (conteneurs Docker) ou Kali/Parrot (VM classique) |
+| **Distribution recommandee** | votre machine d'attaque (conteneurs Docker) ou Kali/Parrot (VM classique) |
 | **Hyperviseur** | VirtualBox (gratuit), VMware Workstation (gratuit), Proxmox (bare metal) |
 | **Connexion VPN** | `sudo openvpn client.ovpn`, verifier `tun0` |
 | **Arborescence** | Un dossier par client, sous-dossiers par type de test |

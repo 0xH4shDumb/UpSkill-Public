@@ -71,7 +71,7 @@ Le fichier `/etc/ftpusers` contient la liste des utilisateurs **interdits** de c
 ### Connexion anonyme
 
 ```bash
-# Depuis Exegol - tentative de connexion anonyme
+# Depuis votre machine d'attaque - tentative de connexion anonyme
 ftp <IP_CIBLE>
 Name: anonymous
 Password:
@@ -91,7 +91,7 @@ ftp> put payload.txt   # - uploader un fichier (si l'écriture est permise)
 Pour récupérer l'intégralité d'un serveur FTP accessible en anonyme :
 
 ```bash
-# Depuis Exegol - téléchargement récursif complet
+# Depuis votre machine d'attaque - téléchargement récursif complet
 wget -m --no-passive ftp://anonymous:anonymous@<IP_CIBLE>
 ```
 
@@ -100,7 +100,7 @@ L'option `-m` (mirror) télécharge de manière récursive en conservant l'arbor
 ### Scan et énumération avec Nmap
 
 ```bash
-# Depuis Exegol - scan de version + scripts par défaut
+# Depuis votre machine d'attaque - scan de version + scripts par défaut
 sudo nmap -sV -sC -p21 <IP_CIBLE>
 ```
 
@@ -115,7 +115,7 @@ Les scripts NSE les plus utiles pour FTP :
 Pour tracer les échanges au niveau des paquets :
 
 ```bash
-# Depuis Exegol - scan avec trace des paquets
+# Depuis votre machine d'attaque - scan avec trace des paquets
 sudo nmap -sV -sC -p21 <IP_CIBLE> --script-trace
 ```
 
@@ -124,7 +124,7 @@ sudo nmap -sV -sC -p21 <IP_CIBLE> --script-trace
 Quand FTPS (FTP over TLS) est en place, on peut inspecter le certificat et les métadonnées avec OpenSSL :
 
 ```bash
-# Depuis Exegol - connexion TLS sur le canal de commande
+# Depuis votre machine d'attaque - connexion TLS sur le canal de commande
 openssl s_client -connect <IP_CIBLE>:21 -starttls ftp
 ```
 
@@ -133,12 +133,12 @@ Le certificat peut révéler le nom de l'organisation, des noms d'hôtes interne
 Pour une interaction manuelle brute sans chiffrement :
 
 ```bash
-# Depuis Exegol - connexion directe via netcat
+# Depuis votre machine d'attaque - connexion directe via netcat
 nc -nv <IP_CIBLE> 21
 ```
 
 ```bash
-# Depuis Exegol - connexion directe via telnet
+# Depuis votre machine d'attaque - connexion directe via telnet
 telnet <IP_CIBLE> 21
 ```
 
