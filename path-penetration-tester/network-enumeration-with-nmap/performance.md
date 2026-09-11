@@ -2,13 +2,13 @@
 
 ## Pourquoi
 
-Un scan Nmap sur un réseau entier peut durer des dizaines de minutes si tu laisses les réglages par défaut. En pentest, le temps est compté : tu dois trouver le bon équilibre entre vitesse et fiabilité. Aller trop vite, c'est rater des hôtes ou des ports. Aller trop lentement, c'est perdre un temps précieux — et parfois se faire repérer par un IDS qui voit un flux anormalement régulier.
+Un scan Nmap sur un réseau entier peut durer des dizaines de minutes si tu laisses les réglages par défaut. En pentest, le temps est compté : tu dois trouver le bon équilibre entre vitesse et fiabilité. Aller trop vite, c'est rater des hôtes ou des ports. Aller trop lentement, c'est perdre un temps précieux - et parfois se faire repérer par un IDS qui voit un flux anormalement régulier.
 
 Nmap propose plusieurs leviers pour ajuster la cadence d'un scan : les délais de réponse (RTT), le nombre de tentatives, le débit minimal et les templates de timing.
 
 ## Comment ça marche
 
-### RTT — Round-Trip Time
+### RTT - Round-Trip Time
 
 Le RTT, c'est le temps qu'un paquet met à faire l'aller-retour entre ta machine et la cible. Nmap démarre avec un RTT initial de 100 ms et l'ajuste dynamiquement en fonction des réponses reçues. Deux options permettent de forcer des valeurs :
 
@@ -17,17 +17,17 @@ Le RTT, c'est le temps qu'un paquet met à faire l'aller-retour entre ta machine
 | `--initial-rtt-timeout` | Définit le délai d'attente initial pour chaque paquet |
 | `--max-rtt-timeout` | Plafonne le délai maximal que Nmap s'autorise |
 
-En réduisant ces valeurs, tu forces Nmap à abandonner plus vite les hôtes lents — le scan accélère, mais au prix de faux négatifs potentiels.
+En réduisant ces valeurs, tu forces Nmap à abandonner plus vite les hôtes lents - le scan accélère, mais au prix de faux négatifs potentiels.
 
-### Retries — tentatives de renvoi
+### Retries - tentatives de renvoi
 
 Quand un port ne répond pas, Nmap renvoie le paquet. Par défaut, il retente jusqu'à 10 fois (`--max-retries 10`). Sur un réseau fiable, 0 ou 1 retry suffit largement. Sur un lien instable (VPN, Wi-Fi), garde au moins 2-3 tentatives.
 
-### Min-rate — débit plancher
+### Min-rate - débit plancher
 
 L'option `--min-rate` impose un nombre minimal de paquets envoyés par seconde. Nmap ne descendra jamais en dessous de ce seuil, même si le réseau est lent. Un `--min-rate 300` divise facilement le temps de scan par 3 ou 4.
 
-### Timing templates — les profils `-T`
+### Timing templates - les profils `-T`
 
 Nmap embarque 6 profils prédéfinis qui ajustent simultanément le RTT, les retries, le parallélisme et les délais inter-paquets :
 

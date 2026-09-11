@@ -1,4 +1,4 @@
-# Lab — Identifier l'OS d'une cible
+# Lab - Identifier l'OS d'une cible
 
 ## Scénario
 
@@ -23,9 +23,9 @@ sudo nmap <IP_CIBLE> -sS -Pn -n --disable-arp-ping -O --script=banner
 
 | Option | Rôle |
 |---|---|
-| `-sS` | SYN scan — discret, pas de connexion complète |
-| `-Pn` | Pas de ping préalable — on suppose la cible active |
-| `-n` | Pas de résolution DNS — gain de temps |
+| `-sS` | SYN scan - discret, pas de connexion complète |
+| `-Pn` | Pas de ping préalable - on suppose la cible active |
+| `-n` | Pas de résolution DNS - gain de temps |
 | `--disable-arp-ping` | Évite les requêtes ARP (utile à travers un VPN) |
 | `-O` | Active la détection d'OS par fingerprinting |
 | `--script=banner` | Récupère les bannières des services ouverts |
@@ -44,7 +44,7 @@ Ici, la bannière SSH te confirme directement qu'il s'agit d'une machine **Ubunt
 
 ## Ce qu'on en retient
 
-- Le fingerprinting OS (`-O`) n'est pas infaillible — il a besoin d'au moins un port ouvert et un port fermé pour fonctionner correctement. Si la cible est très filtrée, il ne donnera rien d'exploitable.
+- Le fingerprinting OS (`-O`) n'est pas infaillible - il a besoin d'au moins un port ouvert et un port fermé pour fonctionner correctement. Si la cible est très filtrée, il ne donnera rien d'exploitable.
 - Les bannières de services sont souvent plus fiables pour identifier l'OS que le fingerprinting lui-même. Un simple `SSH-2.0-OpenSSH_X.Xp1 Ubuntu-...` suffit.
 - Combine toujours les deux approches : `-O` pour l'estimation globale, `--script=banner` pour la confirmation par les services.
 - Pense à vérifier aussi le **TTL** dans les réponses (`--packet-trace` ou `--reason`) : un TTL de 64 pointe vers Linux, 128 vers Windows. C'est un indice supplémentaire quand le fingerprint hésite.

